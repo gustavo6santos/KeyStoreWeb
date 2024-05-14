@@ -45,3 +45,64 @@
     padding-top: 50px;
     margin-bottom: 50px;
 }
+
+@media(max-width:1280px){
+    .upcoming{
+        padding: 0px 80px;
+        margin-bottom: 120px;
+    }
+
+    .upcoming-left h1{
+        font-size: 40px;
+    }
+
+    .upcoming-left p {
+        font-size: 18px;
+    }
+
+    .upcoming-right img{
+        width: 300px;
+    }
+
+    .upcoming-left button {
+        width: 220px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .upcoming-right{
+        padding-top: 30px;
+
+    }
+}
+
+@media(max-width:1024px){
+    .upcoming{
+        padding: 0px 60px;
+        margin-bottom: 80px;
+        height: 40vh;
+    }
+
+    .upcoming-left h1{
+        font-size: 30px;
+    }
+
+    .upcoming-left p {
+        font-size: 16px;
+    }
+
+    .upcoming-right img{
+        width: 200px;
+    }
+
+    .upcoming-left button {
+        width: 160px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .upcoming-right{
+        padding-top: 10px;
+        
+    }
+}

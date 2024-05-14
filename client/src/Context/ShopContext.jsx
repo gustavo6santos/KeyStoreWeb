@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import games from '../Components/AssetsJS/games';
 
+
 export const ShopContext = createContext(null);
 
 const getDefaultCart = ()=> {
@@ -26,7 +27,33 @@ const ShopContextProvider = (props) => {
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId] - 1}));
     }
 
-    const contextValue = {games, cartItems, addToCart, removeFromCart};
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for (const item in cartItems)
+        {
+            if(cartItems[item]>0)
+                {
+                    let itemInfo = games.find((game)=>game._id.toString()===item)
+                    totalAmount += itemInfo.price  * cartItems[item];
+                }
+        }
+        return totalAmount;
+    }
+
+    const getTotalCartItems = () => {
+        let totalItem = 0;
+
+        for(const item in cartItems)
+        {
+            if(cartItems[item]>0)
+                {
+                    totalItem+= cartItems[item];
+                }
+        }
+        return totalItem;
+    }
+
+    const contextValue = {getTotalCartItems, getTotalCartAmount, games, cartItems, addToCart, removeFromCart};
 
     return (
         <ShopContext.Provider value={contextValue}>
