@@ -1,0 +1,47 @@
+.upcoming{
+    width: 65%;
+    height: 60hv;
+    display: flex;
+    margin: auto;
+    padding: 0px 140px;
+    margin-bottom: 150px;
+    background: lightblue;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.upcoming-left{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.upcoming-left h1{
+    color: #171717;
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.upcoming-left button{
+    width: 282px;
+    height: 70px;
+    border-radius: 35px;
+    background: #ff4141;
+    border: none;
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-left: 200px;
+    cursor: pointer;
+}
+
+.upcoming-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+    margin-bottom: 50px;
+}
