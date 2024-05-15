@@ -103,6 +103,57 @@
 
     .upcoming-right{
         padding-top: 10px;
-        
     }
+}
+
+@media(max-width:800px){
+    .upcoming{
+        margin-bottom: 60px;
+    }
+
+    .upcoming-left h1{
+        font-size: 22px;
+    }
+
+    .upcoming-left p {
+        font-size: 13px;
+    }
+
+    .upcoming-right img{
+        width: 180px;
+    }
+
+    .upcoming-left button {
+        width: 140px;
+        height: 30px;
+        font-size: 12px;
+    }
+}
+
+@media(max-width:500px){
+    .upcoming{
+        height: 25vh;
+        margin-bottom: 50px;
+    }
+
+    .upcoming-left h1{
+        font-size: 16px;
+    }
+
+    .upcoming-left p {
+        font-size: 10px;
+    }
+
+    .upcoming-right img{
+        width: 120px;
+    }
+
+    .upcoming-left button {
+        align-items: center;
+        width: 120px;
+        height: 25px;
+        font-size: 10px;
+        margin-top: 12px;
+    }
+
 }
