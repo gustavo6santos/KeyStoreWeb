@@ -1,15 +1,22 @@
-.gamecategory-banner{
+/*.gamecategory-banner{
     display: block;
     margin: 30px auto;
     width: 82%;
     height: 250px;
 }
+*/
+
+.game-category {
+    background: linear-gradient(180deg, #24248f ,#842aa2 100%);
+    
+  }
 
 .gamecategory-indexSort{
     display: flex; 
     margin: 0px 100px;
     justify-content: space-between;
     align-items: center;
+    color: white;
 }
 
 .gamecategory-sort{
@@ -20,6 +27,7 @@
 
 .gamecategory-indexSort p span{
     font-family: 600;
+
 }
 
 .gamecategory-products{
@@ -28,6 +36,8 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     row-gap: 80px;
     gap: 40px;
+    color: white;
+    font-weight: bold;
 }
 
 .gamecategory-products img {

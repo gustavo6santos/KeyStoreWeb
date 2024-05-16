@@ -20,10 +20,10 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Shop/>}/>
-        <Route path='/pc' element={<GameCategory banner={pc_banner} category="Pc" />}/>
-        <Route path='/ps' element={<GameCategory banner={ps_banner} category="Ps"/>}/>
-        <Route path='/xbox' element={<GameCategory banner={xbox_banner} category="Xbox"/>}/>
-        <Route path='/nintendo' element={<GameCategory banner={nintendo_banner} category="Nintendo"/>}/>
+        <Route path='/pc' element={<GameCategory  category="Pc" />}/>
+        <Route path='/ps' element={<GameCategory  category="Ps"/>}/>
+        <Route path='/xbox' element={<GameCategory  category="Xbox"/>}/>
+        <Route path='/nintendo' element={<GameCategory  category="Nintendo"/>}/>
         <Route path='/game' element={<Games/>}>
           <Route path=':gameId' element={<Games/>}/>
         </Route>

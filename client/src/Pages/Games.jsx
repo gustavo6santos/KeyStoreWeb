@@ -5,6 +5,7 @@ import Breadcrum from '../Components/Breadcrums/Breadcrum'
 import ProductDisplay from '../Components/ProductDisplay/ProductDisplay'
 import DescriptionBox from '../Components/DescriptionBox/DescriptionBox'
 import RelatedProducts from '../Components/RelatedProducts/RelatedProducts'
+import CompareSpecs from '../Components/CompareSpecs/CompareSpecs'
 
 export const Games = () => {
   const {games} = useContext(ShopContext)
@@ -16,6 +17,7 @@ export const Games = () => {
     <div>
         <Breadcrum game={product} />
         <ProductDisplay game={product} /> 
+        <CompareSpecs game={product} />
         <DescriptionBox />
         <RelatedProducts />
     </div>

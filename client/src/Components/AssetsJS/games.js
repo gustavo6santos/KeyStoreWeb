@@ -10,7 +10,11 @@ const  games = [
       "image": F12023,
       "price": 57.99,
       "genre": "Simulator",
-      "category": "Pc"
+      "category": "Pc",
+      "cpumodel": "Intel Core I5",
+      "gpumodel": "RTX 3080",
+      "ram": 14,
+      "osType": "Windows"
     },
     {
       "_id": "2",
