@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.elzyrqf.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.elzyrqf.mongodb.net/User_DB`
   )
   .then(() => {
     console.log("Connected to Database!");

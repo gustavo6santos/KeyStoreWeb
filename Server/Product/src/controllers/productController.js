@@ -4,19 +4,28 @@ const mongoose = require("mongoose");
 
 // Models
 const Game = require("../models/productModel");
+const multer = require("multer");
 
 // Create a game
 exports.createGame = async (req, res) => {
-  const { title, price, genre, stock, ram, cpuModel, gpuModel, ostype } = req.body;
+  const { title, image, price, genre, category ,stock, ram, cpuModel, gpuModel, ostype } = req.body;
 
   // Validations
   if (!title) {
     return res.status(422).json({ msg: "Title is mandatory!" });
   }
+
+  if (!image) {
+    return res.status(422).json({ msg: "Title is mandatory!" });
+  }
+
   if (!price) {
     return res.status(422).json({ msg: "Price is mandatory!" });
   }
   if (!genre) {
+    return res.status(422).json({ msg: "Genre is mandatory!" });
+  }
+  if (!category) {
     return res.status(422).json({ msg: "Genre is mandatory!" });
   }
   if (!stock) {
@@ -44,8 +53,10 @@ exports.createGame = async (req, res) => {
 
   const game = new Game({
     title,
+    image,
     price,
     genre,
+    category,
     stock,
     ram,
     cpuModel,
@@ -91,14 +102,16 @@ exports.getGames = async (req, res) => {
 exports.editgame = async (req, res) => {
   try {
     const gameId = req.params.id;
-    const { title, price, genre, stock, ram, cpuModel, gpuModel, ostype } = req.body;
+    const { title, image, price, genre, stock, ram, cpuModel, gpuModel, ostype } = req.body;
 
     const updatedGame = await Game.findByIdAndUpdate(
       gameId,
       {
         title,
+        image,
         price,
         genre,
+        category,
         stock,
         ram,
         cpuModel,
