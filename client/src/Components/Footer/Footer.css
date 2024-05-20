@@ -5,6 +5,7 @@
     align-items: center;
     gap: 10px;
     background: #842aa2;
+  
 }
 
 .footer-logo{
@@ -42,7 +43,6 @@
     align-items: center;
     gap: 10px;
     width: 100%;
-    margin-bottom: 30px;
     color: #1a1a1a;
     font-size: 10px;
 }

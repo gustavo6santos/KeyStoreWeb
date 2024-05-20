@@ -8,7 +8,7 @@
 
 .game-category {
     background: linear-gradient(180deg, #24248f ,#842aa2 100%);
-    
+    margin: auto auto;
   }
 
 .gamecategory-indexSort{
@@ -49,7 +49,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 150px auto;
+    margin: auto auto;
     width: 223px;
     height: 69px;
     border-radius: 75px;

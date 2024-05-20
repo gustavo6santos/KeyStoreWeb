@@ -5,12 +5,9 @@ import { Shop } from './Pages/Shop';
 import { GameCategory } from './Pages/GameCategory';
 import { Games } from './Pages/Games';
 import { Cart } from './Pages/Cart';
-import { LoginSignup } from './Pages/LoginSignup';
 import { Footer } from './Components/Footer/Footer';
-import pc_banner from './Components/Assets/Banners/pc_banner.png'
-import ps_banner from './Components/Assets/Banners/ps_banner.png'
-import xbox_banner from './Components/Assets/Banners/xbox_banner.png'
-import nintendo_banner from './Components/Assets/Banners/nintendo_banner.png'
+import { LoginSignup } from './Pages/LoginSignup';
+import { Login } from './Pages/Login';
 
 
 function App() {
@@ -28,7 +25,8 @@ function App() {
           <Route path=':gameId' element={<Games/>}/>
         </Route>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/login' element={<LoginSignup/>}/>
+        <Route path='/signup' element={<LoginSignup/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
