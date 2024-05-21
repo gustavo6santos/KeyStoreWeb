@@ -3,11 +3,14 @@ const app = express();
 const requireDir = require("require-dir");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require('cors');
 require("dotenv").config();
+
 
 process.setMaxListeners(0);
 
 app.use(bodyParser.json());
+app.use(cors());
 
 mongoose
   .connect(
