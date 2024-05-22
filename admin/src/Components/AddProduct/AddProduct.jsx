@@ -3,7 +3,7 @@ import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 import cpuModels from '../../../../client/src/Components/AssetsJS/Specs/cpuModels';
 import gpuModels from '../../../../client/src/Components/AssetsJS/Specs/gpuModel';
-import osType from '../../../../client/src/Components/AssetsJS/Specs/osType';
+import ostype from '../../../../client/src/Components/AssetsJS/Specs/ostype';
 import ramModel from '../../../../client/src/Components/AssetsJS/Specs/ramModel';
 
 const AddProduct = () => {
@@ -18,52 +18,67 @@ const AddProduct = () => {
         ram: "",
         cpuModel: "",
         gpuModel: "",
-        osType: ""
+        ostype: ""
     });
 
-    const imageHandler = (e) => {
+    const imageHandler = async (e) => {
         const file = e.target.files[0];
         setImage(file);
-        setProductDetails({ ...productDetails, image: file });
+
+        let formData = new FormData();
+        formData.append('product', file);
+
+        const response = await fetch('http://localhost:3002/upload', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+            },
+            body: formData,
+        });
+
+        const responseData = await response.json();
+        if (responseData.success) {
+            setProductDetails({ ...productDetails, image: responseData.image_url });
+        } else {
+            alert("Image upload failed");
+        }
     };
 
     const changeHandler = (e) => {
-        setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        if (name === 'category' && value !== 'Pc') {
+            setProductDetails({
+                ...productDetails,
+                [name]: value,
+                ram: "",
+                cpuModel: "",
+                gpuModel: "",
+                ostype: ""
+            });
+        } else {
+            setProductDetails({ ...productDetails, [name]: value });
+        }
     };
 
     const Add_Product = async () => {
-        console.log(productDetails);
-        let responseData;
-        let product = productDetails;
+        const product = {
+            ...productDetails,
+            price: parseFloat(productDetails.price),
+            stock: parseInt(productDetails.stock, 10),
+            ram: parseInt(productDetails.ram, 10),
+        };
 
-        let formData = new FormData();
-        formData.append('product', image);
-
-        await fetch('http://localhost:3002/upload',{
+        const response = await fetch('http://localhost:3002/create', {
             method: 'POST',
-            headers:{
+            headers: {
                 Accept: 'application/json',
-
+                'Content-Type': 'application/json',
             },
-            body: formData,
-        }).then((resp)=> resp.json()).then((data)=>{responseData=data})
+            body: JSON.stringify(product),
+        });
 
-        if(responseData.sucess)
-        {
-            product.image = responseData.image_url;
-            console.log(product);
-
-            await fetch('http://localhost:3002/create',{
-                method:'POST',
-                headers:{
-                    Accept: 'application/json',
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify(product),
-            }).then((resp)=>resp.json()).then((data)=>{
-                data.sucess?alert("Product Added"):alert("Failed")
-            })
-        }
+        const data = await response.json();
+        data.success ? alert("Product Added With Success") : alert("Failed to add product");
     };
 
     return (
@@ -100,45 +115,49 @@ const AddProduct = () => {
                 </select>
             </div>
 
-            <div className="specs-input">
-                <label>Select your CPU Model</label>
-                <select value={productDetails.cpuModel} onChange={changeHandler} name='cpuModel' className='add-specs'>
-                    {cpuModels.map((cpuModel) => (
-                        <option key={cpuModel.id} value={cpuModel.model}>{cpuModel.model}</option>
-                    ))}
-                </select>
-            </div>
+            {productDetails.category === "Pc" && (
+                <>
+                    <div className="specs-input">
+                        <label>Select your CPU Model</label>
+                        <select value={productDetails.cpuModel} onChange={changeHandler} name='cpuModel' className='add-specs'>
+                            {cpuModels.map((cpuModel) => (
+                                <option key={cpuModel.id} value={cpuModel.model}>{cpuModel.model}</option>
+                            ))}
+                        </select>
+                    </div>
 
-            <div className="specs-input">
-                <label>Select your GPU Model</label>
-                <select value={productDetails.gpuModel} onChange={changeHandler} name='gpuModel' className='add-specs'>
-                    {gpuModels.map((gpuModel) => (
-                        <option key={gpuModel.id} value={gpuModel.model}>{gpuModel.model}</option>
-                    ))}
-                </select>
-            </div>
+                    <div className="specs-input">
+                        <label>Select your GPU Model</label>
+                        <select value={productDetails.gpuModel} onChange={changeHandler} name='gpuModel' className='add-specs'>
+                            {gpuModels.map((gpuModel) => (
+                                <option key={gpuModel.id} value={gpuModel.model}>{gpuModel.model}</option>
+                            ))}
+                        </select>
+                    </div>
 
-            <div className="specs-input">
-                <label>Select your RAM Model</label>
-                <select value={productDetails.ram} onChange={changeHandler} name='ram' className='add-specs'>
-                    {ramModel.map((ram) => (
-                        <option key={ram.id} value={ram.model}>{ram.model}</option>
-                    ))}
-                </select>
-            </div>
+                    <div className="specs-input">
+                        <label>Select your RAM Model</label>
+                        <select value={productDetails.ram} onChange={changeHandler} name='ram' className='add-specs'>
+                            {ramModel.map((ram) => (
+                                <option key={ram.id} value={ram.model}>{ram.model}</option>
+                            ))}
+                        </select>
+                    </div>
 
-            <div className="specs-input">
-                <label>Select your OS</label>
-                <select value={productDetails.osType} onChange={changeHandler} name='osType' className='add-specs'>
-                    {osType.map((os) => (
-                        <option key={os.id} value={os.model}>{os.model}</option>
-                    ))}
-                </select>
-            </div>
+                    <div className="specs-input">
+                        <label>Select your OS</label>
+                        <select value={productDetails.ostype} onChange={changeHandler} name='ostype' className='add-specs'>
+                            {ostype.map((ostype) => (
+                                <option key={ostype.id} value={ostype.model}>{ostype.model}</option>
+                            ))}
+                        </select>
+                    </div>
+                </>
+            )}
 
             <div className="addproduct-itemfield">
                 <label htmlFor="file-input">
-                    <img src={image ? URL.createObjectURL(image) : upload_area} className='addproduct-thumbnail-img' alt="" />
+                    <img src={image ? URL.createObjectURL(image) : upload_area} className='addproduct-thumnail-img' alt="" />
                 </label>
                 <input onChange={imageHandler} type="file" id='file-input' hidden />
             </div>

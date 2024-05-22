@@ -35,7 +35,7 @@
 
 .add-product-selector{
     padding: 10px;
-    width: 100px;
+    width: auto;
     height: 30px;
     font-size: 14px;
     color: #7b7b7b;
@@ -45,7 +45,7 @@
 
 .add-specs{
     padding: 10px;
-    width: 100px;
+    width: auto;
     height: 30px;
     font-size: 14px;
     color: #7b7b7b;

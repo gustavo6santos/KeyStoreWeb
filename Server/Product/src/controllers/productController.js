@@ -31,20 +31,49 @@ exports.createGame = async (req, res) => {
   if (!stock) {
     stock = 0;
   }
-  if (!ram) {
-    return res.status(422).json({ msg: "Ram is mandatory!" });
-  }
-  if (!cpuModel) {
-    return res.status(422).json({ msg: "Cpu Model is mandatory!" });
-  }
-  if (!gpuModel) {
-    return res.status(422).json({ msg: "Gpu Model is mandatory!" });
-  }
-  if (!ostype) {
-    return res.status(422).json({ msg: "OS Type is mandatory!" });
+
+  if(category === "Pc") {
+    if (!ram) {
+      return res.status(422).json({ msg: "Ram is mandatory!" });
+    }
+    if (!cpuModel) {
+      return res.status(422).json({ msg: "Cpu Model is mandatory!" });
+    }
+    if (!gpuModel) {
+      return res.status(422).json({ msg: "Gpu Model is mandatory!" });
+    }
+    if (!ostype) {
+      return res.status(422).json({ msg: "OS Type is mandatory!" });
+    }
+
+    // Check if Game already exists
+  const gameExist = await Game.findOne({ title: title });
+
+  if (gameExist) {
+    return res.status(422).json({ msg: "The game already exist" });
   }
 
-  // Check if Game already exists
+    const game = new Game({
+      title,
+      image,
+      price,
+      genre,
+      category,
+      stock,
+      ram,
+      cpuModel,
+      gpuModel,
+      ostype,
+    });
+    try {
+      await game.save();
+      res.status(201).json({success: true, msg: "Game created with success!" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({success:false, message: "Internal Server Error" });
+    } 
+  } else {
+    // Check if Game already exists
   const gameExist = await Game.findOne({ title: title });
 
   if (gameExist) {
@@ -57,19 +86,17 @@ exports.createGame = async (req, res) => {
     price,
     genre,
     category,
-    stock,
-    ram,
-    cpuModel,
-    gpuModel,
-    ostype,
+    stock
   });
   try {
     await game.save();
-    res.status(201).json({ msg: "Game created with success!" });
+    res.status(201).json({success:true, msg: "Game created with success!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({success:false, message: "Internal Server Error" });
   }
+  }
+  
 };
 
 exports.getGame = async (req, res) => {
