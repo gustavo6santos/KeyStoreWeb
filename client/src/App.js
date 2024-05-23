@@ -7,7 +7,7 @@ import { Games } from './Pages/Games';
 import { Cart } from './Pages/Cart';
 import { Footer } from './Components/Footer/Footer';
 import { LoginSignup } from './Pages/LoginSignup';
-import { Login } from './Pages/Login';
+
 
 
 function App() {
@@ -25,8 +25,7 @@ function App() {
           <Route path=':gameId' element={<Games/>}/>
         </Route>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/signup' element={<LoginSignup/>}/>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/login' element={<LoginSignup/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
