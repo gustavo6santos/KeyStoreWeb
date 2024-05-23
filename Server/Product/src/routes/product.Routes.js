@@ -33,7 +33,7 @@ router.get("/game/verify/:id", productController.verifyGameById);
 router.post("/game/GameCompatibility:id", productController.GameCompatibility);
 
 // Serve static files
-router.get('/images', express.static(uploadDir));
+router.use('/images', express.static(uploadDir));
 
 // Image upload endpoint
 router.post("/upload", upload.single('product'), (req, res) => { 

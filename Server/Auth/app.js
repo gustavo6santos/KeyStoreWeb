@@ -4,8 +4,11 @@ const requireDir = require("require-dir");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
-
+const cors = require('cors');
 process.setMaxListeners(0);
+
+app.use(cors());
+
 
 app.use(bodyParser.json());
 

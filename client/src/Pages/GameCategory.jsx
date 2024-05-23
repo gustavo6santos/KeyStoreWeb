@@ -23,7 +23,7 @@ import { Item } from '../Components/Item/Item'
         <div className="gamecategory-products">
           {games.map((item, i)=>{
             if (props.category===item.category) {
-              return <Item key={i} _id={item._id} name={item.name} image={item.image} price={item.price} category={item.genre}/>
+              return <Item key={i} _id={item._id} name={item.title} image={item.image} price={item.price} category={item.genre}/>
             }
             else{
               return null;

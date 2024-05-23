@@ -1,12 +1,11 @@
-import React, { createContext, useState } from "react";
-import games from '../Components/AssetsJS/games';
+import React, { createContext, useEffect, useState } from "react";
 
 
 export const ShopContext = createContext(null);
 
 const getDefaultCart = ()=> {
     let cart = {};
-    for (let index = 0; index < games.length; index++) {
+    for (let index = 0; index < 300+1; index++) {
         cart[index] = 0;
         
     }
@@ -15,7 +14,14 @@ const getDefaultCart = ()=> {
 
 const ShopContextProvider = (props) => {
 
+    const [games, setAllProducts] = useState([])
     const[cartItems, setCartItems] = useState(getDefaultCart());
+
+    useEffect(()=>{
+        fetch('http://localhost:3002/games/')
+        .then((response)=>response.json())
+        .then((data)=>setAllProducts(data))
+    },[])
     
 
     const addToCart = (itemId) =>{

@@ -9,6 +9,7 @@
 .game-category {
     background: linear-gradient(180deg, #24248f ,#842aa2 100%);
     margin: auto auto;
+    padding-bottom: 330px;
   }
 
 .gamecategory-indexSort{
