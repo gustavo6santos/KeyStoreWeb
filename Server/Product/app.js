@@ -10,7 +10,7 @@ require("dotenv").config();
 process.setMaxListeners(0);
 
 app.use(bodyParser.json());
-
+app.use(express.json());
 app.use(cors());
 
 mongoose

@@ -88,7 +88,17 @@ exports.register = async (req, res) => {
   const salt = await bcrypt.genSalt(12);
   const passwordHash = await bcrypt.hash(password, salt);
 
-  const user = new User({ name, email, password: passwordHash });
+  let cart = {};
+  for(let i = 0;i < 300; i++){
+    cart[i]=0;
+  }
+
+  const user = new User({ 
+    name, 
+    email, 
+    password: passwordHash,
+    cart 
+    });
 
   try {
     await user.save();

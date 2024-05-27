@@ -5,6 +5,7 @@ const User = mongoose.model("User", {
   email: String,
   password: String,
   order_id: String,
+  cart: Object
 });
 
 module.exports = User;

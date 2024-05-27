@@ -17,16 +17,16 @@ const Cartitems = () => {
       </div>
       <hr />
       {games.map((e)=>{
-        if(cartItems[e._id]>0)
+        if(cartItems[e.gameid]>0)
             {
                 return  <div>
                             <div className="cartitems-format cartitems-format-main">
                                 <img src={e.image} alt="" className='carticon-product-icon' />
-                                <p>{e.name}</p>
+                                <p>{e.title}</p>
                                 <p>${e.price}</p>
-                                <button className='cartitems-quantity'>{cartItems[e._id]}</button>
-                                <p>${e.price*cartItems[e._id]}</p>
-                                <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromCart(e._id)}} alt="" />
+                                <button className='cartitems-quantity'>{cartItems[e.gameid]}</button>
+                                <p>${e.price*cartItems[e.gameid]}</p>
+                                <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromCart(e.gameid)}} alt="" />
                             </div>
                             <hr />
                         </div>

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Game = mongoose.model("Game", {
+  gameid: Number,
   title: String,
   image: String,
   price: Number,

@@ -8,7 +8,7 @@ const multer = require("multer");
 
 // Create a game
 exports.createGame = async (req, res) => {
-  const { title, image, price, genre, category ,stock, ram, cpuModel, gpuModel, ostype } = req.body;
+  const { gameid, title, image, price, genre, category ,stock, ram, cpuModel, gpuModel, ostype } = req.body;
 
   // Validations
   if (!title) {
@@ -46,14 +46,10 @@ exports.createGame = async (req, res) => {
       return res.status(422).json({ msg: "OS Type is mandatory!" });
     }
 
-    // Check if Game already exists
-  const gameExist = await Game.findOne({ title: title });
-
-  if (gameExist) {
-    return res.status(422).json({ msg: "The game already exist" });
-  }
+    
 
     const game = new Game({
+      gameid,
       title,
       image,
       price,
@@ -63,7 +59,7 @@ exports.createGame = async (req, res) => {
       ram,
       cpuModel,
       gpuModel,
-      ostype,
+      ostype
     });
     try {
       await game.save();
@@ -73,14 +69,10 @@ exports.createGame = async (req, res) => {
       res.status(500).json({success:false, message: "Internal Server Error" });
     } 
   } else {
-    // Check if Game already exists
-  const gameExist = await Game.findOne({ title: title });
 
-  if (gameExist) {
-    return res.status(422).json({ msg: "The game already exist" });
-  }
 
   const game = new Game({
+    gameid,
     title,
     image,
     price,
@@ -212,3 +204,4 @@ exports.GameCompatibility = async (req, res) => {
   }
 
 };
+

@@ -26,7 +26,20 @@ const ShopContextProvider = (props) => {
 
     const addToCart = (itemId) =>{
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId] + 1}));
-        console.log(cartItems);
+        if(localStorage.getItem('auth-token')){
+            fetch('http://localhost:3002/game/AddToCart',{
+                method: 'POST',
+                headers:{
+                    Accept:'application/json',
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({"itemId":itemId}),
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data))
+            .catch((error) => console.error('Error:', error)); 
+        }
     }
 
     const removeFromCart = (itemId) =>{
@@ -39,7 +52,7 @@ const ShopContextProvider = (props) => {
         {
             if(cartItems[item]>0)
                 {
-                    let itemInfo = games.find((game)=>game._id.toString()===item)
+                    let itemInfo = games.find((game)=>game.gameid.toString()===item)
                     totalAmount += itemInfo.price  * cartItems[item];
                 }
         }

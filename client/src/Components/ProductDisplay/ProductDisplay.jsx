@@ -33,7 +33,7 @@ const ProductDisplay = (props) => {
         <div className="productdisplay-right-description">
         Step into the world of EA Sports FC 24, where the future of football gaming comes alive! With unrivaled realism, this immersive experience encapsulates all the beloved features of contemporary FIFA games.
         </div>
-        <button onClick={()=>{addToCart(game._id)}}>ADD TO CART</button>
+        <button onClick={()=>{addToCart(game.gameid)}}>ADD TO CART</button>
       </div>
     </div>
   )
