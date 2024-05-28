@@ -7,6 +7,7 @@ import { Games } from './Pages/Games';
 import { Cart } from './Pages/Cart';
 import { Footer } from './Components/Footer/Footer';
 import { LoginSignup } from './Pages/LoginSignup';
+import Checkout from './Pages/Checkout';
 
 
 
@@ -26,6 +27,7 @@ function App() {
         </Route>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/login' element={<LoginSignup/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
