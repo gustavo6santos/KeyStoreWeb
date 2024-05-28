@@ -205,3 +205,7 @@ exports.GameCompatibility = async (req, res) => {
 
 };
 
+
+// exports.AddToCart = async (req,res) => {
+//   console.log(req.body);
+// }

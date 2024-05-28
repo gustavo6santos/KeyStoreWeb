@@ -13,6 +13,8 @@ const logDetails = async (req, res, userId) => {
   }
 };
 
+
+
 exports.logMiddleware = async (req, res, next) => {
   const id = req.params.id;
 

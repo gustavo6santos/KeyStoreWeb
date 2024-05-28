@@ -31,9 +31,8 @@ router.put("/games/edit/:id", productController.editgame);
 router.delete("/games/delete/:id", productController.deleteGame);
 router.get("/game/verify/:id", productController.verifyGameById);
 router.post("/game/GameCompatibility:id", productController.GameCompatibility);
-router.post("/game/AddToCart", async (req,res)=>{
-    console.log(req.body);
-})
+//router.post("/game/AddToCart", productController.AddToCart);
+
 
 // Serve static files
 router.use('/images', express.static(uploadDir));

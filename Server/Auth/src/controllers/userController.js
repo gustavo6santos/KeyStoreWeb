@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 // Models
 const User = require("../models/userModel");
+const { response } = require("express");
 
 // Login logic
 exports.login = async (req, res) => {
@@ -186,3 +187,29 @@ exports.addOrderId = async (req, response) => {
     return response.status(500).send({ error: error, message: error.message });
   }
 };
+
+exports.AddToCart = async (req, response) => {
+
+  console.log("Added", req.body.itemId)
+  let userData = await User.findOne({_id:req.user.id});
+  userData.cart[req.body.itemId] += 1;
+  await User.findOneAndUpdate({_id:req.user.id}, {cart:userData.cart});
+  response.send("Added");
+
+};
+
+exports.RemoveFromCart = async (req,response) => {
+
+  console.log("Removed", req.body.itemId)
+  let userData = await User.findOne({_id:req.user.id});
+  if(userData.cart[req.body.itemId]>0)
+  userData.cart[req.body.itemId] -= 1;
+  await User.findOneAndUpdate({_id:req.user.id}, {cart:userData.cart});
+  response.send("Removed");
+}
+
+exports.GetCart = async (req,response) => {
+  console.log("GetCart");
+  let userData = await User.findOne({_id: req.user.id})
+  response.json(userData.cart);
+}
