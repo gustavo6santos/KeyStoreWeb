@@ -1,38 +1,167 @@
-/* Checkout.css */
+.checkout {
+  margin: 100px 170px;
+}
 
-.checkout-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.checkout hr {
+  height: 3px;
+  background: #e2e2e2;
+  border: 0;
+}
+
+.checkout-format-main {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 75px;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkout-format {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.checkout-product-icon {
+  height: 62px;
+  width: 45px;
+  margin-left: 30px;
+}
+
+.checkout-remove-icon {
+  margin: 0px 20px;
+  cursor: pointer;
+}
+
+.checkout-quantity {
+  width: 64px;
+  height: 50px;
+  border: 2px solid #ebebeb;
+  background: #fff;
+  color: black;
+  font-family: 'Poppins';
+}
+
+.checkout-down {
+  display: flex;
+  justify-content: space-between;
+  margin: 100px 0px;
+}
+
+.billing-info {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.billing-info h1 {
+  font-size: 30px;
+  font-weight: 100px;
+  margin-bottom: 20px;
+}
+
+.billing-info form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.billing-info label {
+  font-size: 16px;
+}
+
+.billing-info input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.checkout-total {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+
+
+.checkout-total-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0px;
+}
+
+.checkout-total button {
+  width: 200px;
+  height: 58px;
+  outline: none;
+  border: none;
+  background: #ff5a5a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+@media(max-width:1280px) {
+  .checkout {
+    margin: 60px 50px;
   }
-  
-  .product-details {
-    display: flex;
-    margin-bottom: 20px;
+
+  .checkout-format-main {
+    grid-template-columns: 0.5fr 3fr 0.5fr 0.5fr 0.5fr 0.5fr;
+    gap: 20px;
+    padding: 15px 0px;
+    font-size: 15px;
   }
-  
-  .product-details img {
-    width: 100px;
-    height: 100px;
-    margin-right: 20px;
+
+  .checkout-product-icon {
+    height: 50px;
   }
-  
-  .details h3 {
-    margin-top: 0;
+
+  .checkout-remove-icon {
+    margin: auto;
   }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+
+  .checkout-quantity {
+    width: 40px;
+    height: 30px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  .checkout-down {
+    margin: 80px 0px;
+    flex-direction: column;
+    gap: 80px;
   }
-  
+
+  .billing-info {
+    margin-right: 0;
+  }
+
+  .checkout-total {
+    margin: 0;
+  }
+
+  .checkout-total button {
+    max-width: 200px;
+    height: 45px;
+    font-size: 13px;
+  }
+}
+
+@media(max-width:500px) {
+  .checkout-format-main {
+    display: none;
+  }
+
+  .checkout-format {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+    gap: 10px;
+  }
+}

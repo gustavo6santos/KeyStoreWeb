@@ -213,3 +213,19 @@ exports.GetCart = async (req,response) => {
   let userData = await User.findOne({_id: req.user.id})
   response.json(userData.cart);
 }
+
+exports.ClearCart = async (req, res) => {
+  try {
+      let userData = await User.findOne({_id: req.user.id});
+      let newCart = {};
+      for (let i = 0; i < 301; i++) {
+          newCart[i] = 0;
+      }
+      userData.cart = newCart;
+      await User.findOneAndUpdate({_id: req.user.id}, {cart: newCart});
+      res.send("Cart Cleared");
+  } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: error, message: error.message });
+  }
+};

@@ -30,7 +30,7 @@
 }
 
 .carticon-product-icon{
-    width: 35px;
+    width: 45px;
     margin: 0px 20px;
     cursor: pointer;
 }
@@ -40,6 +40,8 @@
     height: 50px;
     border: 2px solid #ebebeb;
     background: #fff;
+    color: black;
+    font-family: 'Poppins';
 
 }
 
