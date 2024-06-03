@@ -145,7 +145,7 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    const AddPurchase = (itemId) => {
+    const AddPurchase = (gameid, userEmail, price, title) => {
         const token = localStorage.getItem('auth-token');
         if (token) {
             // Iterate through the cart items and make API calls to add purchases
@@ -159,8 +159,10 @@ const ShopContextProvider = (props) => {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            gameid: itemId,
-                            userEmail: '', // Pass the user email here
+                            gameid,
+                            userEmail,
+                            price,
+                            title, // Pass the user email here
                         }),
                     })
                     .then((response) => {

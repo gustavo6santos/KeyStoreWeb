@@ -30,6 +30,7 @@ export const LoginSignup = () => {
 
     if (responseData.success) {
       localStorage.setItem('auth-token', responseData.token);
+      localStorage.setItem('userEmail', responseData.email);
       window.location.replace("/");
     } else {
       alert(responseData.msg);

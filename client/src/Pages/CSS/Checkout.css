@@ -50,41 +50,30 @@
   margin: 100px 0px;
 }
 
-.billing-info {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  margin-right: 50px;
-}
-
-.billing-info h1 {
-  font-size: 30px;
-  font-weight: 100px;
-  margin-bottom: 20px;
-}
-
-.billing-info form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.billing-info label {
-  font-size: 16px;
-}
-
-.billing-info input {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 .checkout-total {
   flex: 1;
-  display: flex;
+  display:flex;
   flex-direction: column;
   gap: 40px;
+}
+
+.payment-method, .checkout-total {
+  
+  width: 48%;
+}
+
+.payment-method h1, .checkout-total h1 {
+  text-align: left;
+}
+
+.payment-method form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-method label {
+  margin-bottom: 10px;
 }
 
 
@@ -104,6 +93,7 @@
   color: #fff;
   font-size: 16px;
   font-weight: 600;
+  font-family: 'Poppins';
   cursor: pointer;
   border-radius: 6px;
 }

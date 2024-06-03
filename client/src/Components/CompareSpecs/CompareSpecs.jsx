@@ -21,11 +21,10 @@ const CompareSpecs = (props) => {
         <div className="comparespecs-container">
           <div className="specs-column">
             <h2>{game.name} Recommended Specs</h2>
-            <p><span className="bold-text">CPU:</span> {game.cpumodel}</p>
-            <p><span className="bold-text">GPU:</span> {game.gpumodel}</p>
+            <p><span className="bold-text">CPU:</span> {game.cpuModel}</p>
+            <p><span className="bold-text">GPU:</span> {game.gpuModel}</p>
             <p><span className="bold-text">RAM:</span> {game.ram}</p>
-            <p><span className="bold-text">OS:</span> {game.osType}</p>
-            <button className="comparespecs-button">Click Here to Test!</button>
+            <p><span className="bold-text">OS:</span> {game.ostype}</p>
           </div>
           <div className="specs-column">
             <h2>My Specs</h2>
@@ -61,6 +60,7 @@ const CompareSpecs = (props) => {
                 ))}
               </select>
             </div>
+            <button className="comparespecs-button">Click Here to Test!</button>
           </div>
         </div>
       )}

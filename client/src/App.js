@@ -8,6 +8,8 @@ import { Cart } from './Pages/Cart';
 import { Footer } from './Components/Footer/Footer';
 import { LoginSignup } from './Pages/LoginSignup';
 import Checkout from './Pages/Checkout';
+import { UserProfile } from './Pages/UserProfile';
+
 
 
 
@@ -28,6 +30,7 @@ function App() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/login' element={<LoginSignup/>}/>
         <Route path='/checkout' element={<Checkout/>}/>
+        <Route path='/profile' element={<UserProfile/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './CSS/Checkout.css';
 import { ShopContext } from '../Context/ShopContext';
 import remove_icon from '../Components/Assets/Web Icons/cart_cross_icon.png';
@@ -6,10 +6,16 @@ import { Link } from 'react-router-dom';
 
 const Checkout = () => {
     const { getTotalCartAmount, games, cartItems, removeFromCart, ClearCart, AddPurchase } = useContext(ShopContext);
+    const [paymentMethod, setPaymentMethod] = useState('');
 
     const handlePurchase = () => {
-      ClearCart();
-      AddPurchase();  
+        const userEmail = localStorage.getItem('userEmail');
+        games.forEach(game => {
+            if (cartItems[game.gameid] > 0) {
+                AddPurchase(game.gameid, userEmail, game.price, game.title);
+            }
+        });
+        ClearCart();
     };
 
     return (
@@ -35,30 +41,35 @@ const Checkout = () => {
                                 <p>${e.price * cartItems[e.gameid]}</p>
                                 <img className='checkout-remove-icon' src={remove_icon} onClick={() => { removeFromCart(e.gameid) }} alt="" />
                             </div>
-                            <hr />
+                            <hr/>
                         </div>
                     )
                 }
                 return null;
             })}
             <div className="checkout-down">
-                <div className="billing-info">
-                    <h1>Billing Information</h1>
+                <div className="payment-method">
+                    <h1>Payment Method</h1>
                     <form>
                         <label>
-                            <input type="text" name="name" placeholder='Name'/>
+                            <input type="radio" name="paymentMethod" value="Debit Card" 
+                                onChange={() => setPaymentMethod('Debit Card')} />
+                            Debit Card
                         </label>
                         <label>
-                            <input type="text" name="phone" placeholder='Phone'/>
+                            <input type="radio" name="paymentMethod" value="Credit Card" 
+                                onChange={() => setPaymentMethod('Credit Card')} />
+                            Credit Card
                         </label>
                         <label>
-                            <input type="text" name="city" placeholder='City'/>
+                            <input type="radio" name="paymentMethod" value="MB Way" 
+                                onChange={() => setPaymentMethod('MB Way')} />
+                            MB Way
                         </label>
                         <label>
-                            <input type="text" name="zip" placeholder='Zip Code' />
-                        </label>
-                        <label>
-                            <input type="text" name="country" placeholder='Country' />
+                            <input type="radio" name="paymentMethod" value="PayPal" 
+                                onChange={() => setPaymentMethod('PayPal')} />
+                            PayPal
                         </label>
                     </form>
                 </div>
@@ -75,7 +86,7 @@ const Checkout = () => {
                             <h3>${getTotalCartAmount()}</h3>
                         </div>
                     </div>
-                    <Link to='/checkout'>
+                    <Link to='/checkout/confirmation'>
                         <button onClick={handlePurchase}>PURCHASE</button>
                     </Link>
                 </div>

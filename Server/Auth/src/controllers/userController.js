@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
     //  { expiresIn: "5m" }
   );
 
-    return res.status(200).json({ success: true, msg: "Authentication completed successfully!", token });
+    return res.status(200).json({ success: true, msg: "Authentication completed successfully!", token, email });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ success: false, msg: "Error on the Server! Try again later!" });

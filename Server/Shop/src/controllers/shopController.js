@@ -122,22 +122,24 @@ exports.addPurchase = async (req, response) => {
 
 
 exports.addPurchase = async (req, res) => {
-  const { gameid, userEmail } = req.body;
+  const { gameid, userEmail, price, title } = req.body; 
 
   try {
+    // Create the current date and time
     const date = new Date();
-    const userRes = await axios.get(`http://localhost:3001/user/verify/${userEmail}`);
-    const { success: userSuccess } = userRes.data;
-
-    if (userSuccess === 1) {
+      // Verify game
       const gameRes = await axios.get(`http://localhost:3002/game/verify/${gameid}`);
       const { success: gameSuccess } = gameRes.data;
 
       if (gameSuccess === 1) {
+        // Generate a game key
         const game_key = crypto.randomBytes(8).toString('hex').match(/.{1,4}/g).join('-').toUpperCase();
-        const shop = new Shop({ gameid, userEmail, date, game_key });
+        
+        // Create a new Shop instance
+        const shop = new Shop({ gameid, userEmail, price, title, date, game_key });
 
         try {
+          // Save the shop instance to the database
           await shop.save();
           return res.status(201).json(shop);
         } catch (error) {
@@ -147,11 +149,9 @@ exports.addPurchase = async (req, res) => {
       } else {
         return res.status(404).send("Game not found");
       }
-    } else {
-      return res.status(404).send("User not found");
-    }
   } catch (error) {
-    return res.status(500).send({ error: error, message: error.message });
+    console.error(error);
+    return res.status(500).send({ error: error.message });
   }
 };
 

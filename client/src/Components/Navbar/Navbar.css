@@ -5,9 +5,19 @@
 }
 
 /* cart image dimensiosn*/
+
 .nav-login-cart img {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
+}
+
+.user-icon img {
+    margin-left: 200px;
+}
+
+
+.nav-login-cart img:last-child {
+    margin-left: 10px; /* Add margin to separate user icon from cart icon */
 }
 
 .navbar{
@@ -68,20 +78,20 @@
 }
 
 
-.nav-login-cart{
+.nav-login-cart {
     display: flex;
     align-items: center;
-    gap: -50px;
+    gap: 10px; /* Adjust the gap as needed */
 }
 
 .nav-login-cart button {
-    width: 157px;
-    height: 58px;
+    width: 107px;
+    height: 38px;
     outline: none;
     border: 1px solid #7a7a7a;
     border-radius: 75px;
     color: #515151;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     background: white;
     cursor: pointer;
@@ -93,15 +103,15 @@
 
 
 .nav-cart-count{
-    width: 22px;
-    height: 22px;
+    width: 15px;
+    height: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: -35px;
-    margin-left: -55 px;
+    margin-left: -45 px;
     border-radius: 11px;
-    font-size: 15px;
+    font-size: 12px;
     background: red;
     color: white;
 }

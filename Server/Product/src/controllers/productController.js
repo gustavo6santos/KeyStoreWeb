@@ -168,9 +168,9 @@ exports.deleteGame = async (req, res) => {
 exports.verifyGameById = async (req, res) => {
   try {
     // req.params
-    let id = req.params.id;
+    let gameid = req.params.id;
 
-    const game = await Game.findById(id);
+    const game = await Game.findOne({gameid: gameid});
     if (!game) {
       return res.status(404).json({ success: 0 });
     }
