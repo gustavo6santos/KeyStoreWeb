@@ -3,6 +3,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require('axios');
+
 
 // Models
 const User = require("../models/userModel");
@@ -160,31 +162,47 @@ exports.verifyUserByEmail = async (req, res) => {
   }
 };
 
+exports.addGame = async (req, res) => {
+  const email = req.body.userEmail || req.headers['userEmail'];
 
-exports.addOrderId = async (req, response) => {
-
-  const { userEmail, order_id } = req.body;
-  // Check if the user with the provided email exists
   try {
-    const userRes = await User.findOne({ userEmail });
-    if (userRes) {
-      // Update the user's orderid
-      userRes.order_id = order_id;
-
-      try {
-        await userRes.save();
-        return response.status(200).json(userRes);
-      } catch (error) {
-
-        console.error(error);
-        return response.status(500).send("Internal server error");
-      }
-
-    } else {
-      return response.status(404).send("User not found");
+    // Verificar se o usuário com o email fornecido existe
+    const userRes = await User.findOne({ email: email });
+    if (!userRes) {
+      return res.status(404).send("User not found");
     }
+
+    // Buscar os jogos do usuário
+    axios
+      .get(`http://localhost:3003/shop/${email}`)
+      .then(async (gamesRes) => {
+        const { success, shop } = gamesRes.data;
+        if (success === 1) {
+          const games = shop.map((item) => {
+            return {
+              title: item.title,
+              price: item.price,
+              game_key: item.game_key,
+              date: item.date
+            };
+          });
+
+          // Atualizar os jogos do usuário
+          userRes.games = games;
+
+          await userRes.save();
+          return res.status(200).json(userRes);
+        } else {
+          return res.status(404).send("No games found for the user");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        return res.status(500).send({ error: error, message: error.message });
+      });
   } catch (error) {
-    return response.status(500).send({ error: error, message: error.message });
+    console.error(error);
+    return res.status(500).send("Internal server error");
   }
 };
 

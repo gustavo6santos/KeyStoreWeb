@@ -1,13 +1,12 @@
 import React from 'react'
 import './Footer.css'
-import footerlogo from '../Assets/logo.png'
+import footerlogo from '../Assets/Web Icons/logo 1.png'
 
 export const Footer = () => {
   return (
     <div className='footer'>
         <div className="footer-logo">
             <img src={footerlogo} alt="" />
-            <p>Key Store</p>
         </div>
         <ul className="footer-links">
             <li>Products</li>

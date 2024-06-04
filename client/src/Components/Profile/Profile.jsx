@@ -4,6 +4,7 @@ import cpuModels from '../AssetsJS/Specs/cpuModels';
 import gpuModels from '../AssetsJS/Specs/gpuModel';
 import ramModel from '../AssetsJS/Specs/ramModel';
 import osType from '../AssetsJS/Specs/osType';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -17,14 +18,14 @@ const Profile = () => {
   return (
     <div className="profile">
   <div className="profile-tabs">
-    <button
+    <Link to='/profile/myspecs'><button
       className={activeTab === 'specs' ? 'active-tab' : ''}
       onClick={() => handleTabChange('specs')}
     >
       My Specs
-    </button>
-    <button
-      className={activeTab === 'orders' ? 'active-tab' : <div className="specs-column">
+    </button></Link>
+    <button 
+    className={activeTab === 'orders' ? 'active-tab' : <div className="specs-column">
       
     </div>}
       onClick={() => handleTabChange('orders')}

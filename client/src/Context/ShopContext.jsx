@@ -148,41 +148,65 @@ const ShopContextProvider = (props) => {
     const AddPurchase = (gameid, userEmail, price, title) => {
         const token = localStorage.getItem('auth-token');
         if (token) {
-            // Iterate through the cart items and make API calls to add purchases
-            for (const itemId in cartItems) {
-                if (cartItems[itemId] > 0) {
-                    fetch('http://localhost:3003/shop/add', {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'auth-token': token,
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            gameid,
-                            userEmail,
-                            price,
-                            title, // Pass the user email here
-                        }),
-                    })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then((data) => console.log('Purchase added:', data))
-                    .catch((error) => console.error('Error adding purchase:', error));
+            fetch('http://localhost:3003/shop/add', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'auth-token': token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    gameid,
+                    userEmail,
+                    price,
+                    title,
+                }),
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
                 }
-            }
-
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Purchase added:', data);
+                // Se a compra foi adicionada com sucesso, chama a função para adicionar o ID do pedido ao usuário
+                addGame(data.gameid, userEmail);
+            })
+            .catch((error) => console.error('Error adding purchase:', error));
         } else {
             console.error('User is not authenticated');
         }
-    }
+    };
     
 
-    const contextValue = { getTotalCartItems, getTotalCartAmount, games, cartItems, addToCart, removeFromCart, ClearCart, AddPurchase };
+    const addGame = (gameid, userEmail) => {
+        const token = localStorage.getItem('auth-token');
+        if (token) {
+            fetch('http://localhost:3001/user/addGame', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'auth-token': token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ gameid, userEmail }),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then((data) => console.log('Order ID added:', data))
+                .catch((error) => console.error('Error adding order ID:', error));
+        } else {
+            console.error('User is not authenticated');
+        }
+    };
+    
+
+    const contextValue = { getTotalCartItems, getTotalCartAmount, games, cartItems, addToCart, removeFromCart, ClearCart, AddPurchase, addGame };
 
     return (
         <ShopContext.Provider value={contextValue}>

@@ -161,7 +161,7 @@ exports.getPurchase = async (req, response) => {
     const userEmail = req.params.userEmail;
 
     axios
-      .get(`http://auth-service:3001/user/verify/${userEmail}`)
+      .get(`http://localhost:3001/user/verify/${userEmail}`)
       .then(async (res) => {
         const { success } = res.data;
         if (success === 1) {
@@ -172,13 +172,13 @@ exports.getPurchase = async (req, response) => {
               return response.status(404).send({ success: 0, message: "Don't have purchases!" });
             }
 
-            return response.status(200).json(shop);
+            return response.status(200).json({ success: 1, shop });
           } catch (error) {
             console.error(error);
             return response.status(500).send("Internal server error");
           }
         } else {
-          return response.status(404).send("Purchse not found");
+          return response.status(200).json({ success: 0, message: "Purchase not found" });
         }
       })
       .catch((error) => {

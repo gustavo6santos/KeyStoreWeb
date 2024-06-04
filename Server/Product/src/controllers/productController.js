@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 // Models
 const Game = require("../models/productModel");
+const Counter = require('../models/counter');
 const multer = require("multer");
 
 // Create a game
@@ -46,7 +47,13 @@ exports.createGame = async (req, res) => {
       return res.status(422).json({ msg: "OS Type is mandatory!" });
     }
 
-    
+    let count = await Game.countDocuments();
+    let gameid = count + 1; // Initial gameid
+
+    // Check if the generated gameid already exists, and increment until a unique id is found
+    while (await Game.exists({ gameid })) {
+      gameid += 1;
+    }
 
     const game = new Game({
       gameid,
@@ -69,7 +76,14 @@ exports.createGame = async (req, res) => {
       res.status(500).json({success:false, message: "Internal Server Error" });
     } 
   } else {
+  
+    let count = await Game.countDocuments();
+    let gameid = count + 1; // Initial gameid
 
+    // Check if the generated gameid already exists, and increment until a unique id is found
+    while (await Game.exists({ gameid })) {
+      gameid += 1;
+    }
 
   const game = new Game({
     gameid,
