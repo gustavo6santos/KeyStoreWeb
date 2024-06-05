@@ -247,3 +247,46 @@ exports.ClearCart = async (req, res) => {
       res.status(500).send({ error: error, message: error.message });
   }
 };
+
+exports.AddSpecs = async (req, res) => {
+  const email = req.body.email || req.headers['userEmail'];
+
+  const { cpuModel, gpuModel, ram, ostype } = req.body;
+
+  if (!cpuModel) {
+    return res.status(422).json({ success: false, msg: "Insert CPU Model" });
+  }
+  if (!gpuModel) {
+    return res.status(422).json({ success: false, msg: "Insert GPU Model" });
+  }
+  if (!ram) {
+    return res.status(422).json({ success: false, msg: "Insert RAM" });
+  }
+  if (!ostype) {
+    return res.status(422).json({ success: false, msg: "Insert OS Type" });
+  }
+
+  try {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "User not found" });
+    }
+
+    const userSpecs = {
+      cpuModel,
+      gpuModel,
+      ram,
+      ostype
+    };
+
+    user.specs = userSpecs;
+
+    await user.save();
+
+    return res.status(201).json({ success: true, msg: "Specs created with success!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ success: false, msg: "Error on the server! Try again later!" });
+  }
+};

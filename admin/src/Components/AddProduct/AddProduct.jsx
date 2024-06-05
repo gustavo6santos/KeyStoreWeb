@@ -3,7 +3,7 @@ import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 import cpuModels from '../../../../client/src/Components/AssetsJS/Specs/cpuModels';
 import gpuModels from '../../../../client/src/Components/AssetsJS/Specs/gpuModel';
-import ostype from '../../../../client/src/Components/AssetsJS/Specs/ostype';
+import ostype from '../../../../client/src/Components/AssetsJS/Specs/osType';
 import ramModel from '../../../../client/src/Components/AssetsJS/Specs/ramModel';
 
 const AddProduct = () => {
