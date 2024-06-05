@@ -248,45 +248,32 @@ exports.ClearCart = async (req, res) => {
   }
 };
 
-exports.AddSpecs = async (req, res) => {
-  const email = req.body.email || req.headers['userEmail'];
-
-  const { cpuModel, gpuModel, ram, ostype } = req.body;
-
-  if (!cpuModel) {
-    return res.status(422).json({ success: false, msg: "Insert CPU Model" });
-  }
-  if (!gpuModel) {
-    return res.status(422).json({ success: false, msg: "Insert GPU Model" });
-  }
-  if (!ram) {
-    return res.status(422).json({ success: false, msg: "Insert RAM" });
-  }
-  if (!ostype) {
-    return res.status(422).json({ success: false, msg: "Insert OS Type" });
-  }
+exports.addSpecs = async (req, res) => {
+  const email = req.headers['useremail']; // Accessing the header in lowercase
+ // Log the received email for debugging
 
   try {
-    const user = await User.findOne({ email: email });
-
-    if (!user) {
-      return res.status(404).json({ success: false, msg: "User not found" });
+    // Verify if the user with the provided email exists
+    const userRes = await User.findOne({ email: email });
+    if (!userRes) {
+      console.log('User not found for email:', email); // Log if user is not found
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const userSpecs = {
+    // Update the user's specs
+    const { cpuModel, gpuModel, ram, ostype } = req.body;
+    userRes.specs = {
       cpuModel,
       gpuModel,
       ram,
       ostype
     };
 
-    user.specs = userSpecs;
-
-    await user.save();
-
-    return res.status(201).json({ success: true, msg: "Specs created with success!" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ success: false, msg: "Error on the server! Try again later!" });
+    await userRes.save();
+    return res.status(200).json(userRes); // Send JSON response
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" }); // Send JSON error response
   }
 };
+

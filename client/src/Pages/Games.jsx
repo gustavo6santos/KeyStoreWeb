@@ -6,6 +6,7 @@ import ProductDisplay from '../Components/ProductDisplay/ProductDisplay'
 import DescriptionBox from '../Components/DescriptionBox/DescriptionBox'
 import RelatedProducts from '../Components/RelatedProducts/RelatedProducts'
 import CompareSpecs from '../Components/CompareSpecs/CompareSpecs'
+import gamesCSS from './CSS/Games.css'
 
 export const Games = () => {
   const {games} = useContext(ShopContext)
@@ -14,11 +15,11 @@ export const Games = () => {
   const product = games.find((e)=> e._id.toString() === gameId);
   
   return (
-    <div>
+    <div className='background'>
         <Breadcrum game={product} />
-        <ProductDisplay game={product} /> 
+        <ProductDisplay game={product} />
+        <DescriptionBox/> 
         <CompareSpecs game={product} />
-        <DescriptionBox />
         <RelatedProducts />
     </div>
   )

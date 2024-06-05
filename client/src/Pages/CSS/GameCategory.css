@@ -7,7 +7,7 @@
 */
 
 .game-category {
-    background: linear-gradient(180deg, #24248f ,#842aa2 100%);
+    background: linear-gradient(180deg, #2f4dba ,#842aa2 100%);
     margin: auto auto;
     padding-bottom: 330px;
   }
@@ -44,6 +44,7 @@
 .gamecategory-products img {
     width: 200px; 
     height: 300px; 
+    border-radius: 10px;
 }
 
 .gamecategory-loadmore{

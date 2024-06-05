@@ -9,12 +9,12 @@ exports.createReview = async (req, response) => {
 
   // Check if the user with the provided email exists
   axios
-    .get(`http://auth-service:3001/user/verify/${userEmail}`)
+    .get(`http://localhost:3001/user/verify/${userEmail}`)
     .then((res) => {
       const { success } = res.data;
       if (success === 1) {
         axios
-          .get(`http://product-service:3002/game/verify/${gameid}`)
+          .get(`http://localhost:3002/game/verify/${gameid}`)
           .then(async (res) => {
             const { success } = res.data;
             if (success === 1) {
@@ -43,39 +43,25 @@ exports.createReview = async (req, response) => {
     });
 };
 
-exports.getReview = async (req, response) => {
+exports.getReview = async (req, res) => {
   try {
     const gameid = req.params.gameid;
 
-    axios
-      .get(`http://product-service:3002/game/verify/${gameid}`)
-      .then(async (res) => {
-        const { success } = res.data;
-        if (success === 1) {
-          try {
-            const reviews = await Review.find({ gameid: gameid });
+    // Busca as revisões diretamente pelo ID do jogo
+    const reviews = await Review.find({ gameid: gameid });
 
-            if (!reviews) {
-              return response.status(404).send({ success: 0, message: "Don't have reviews!" });
-            }
+    if (!reviews || reviews.length === 0) {
+      return res.status(404).json({ success: 0, message: "Não há revisões para este jogo." });
+    }
 
-            return response.status(200).json(reviews);
-          } catch (error) {
-            console.error(error);
-            return response.status(500).send("Internal server error");
-          }
-        } else {
-          return response.status(404).send("Game not found");
-        }
-      })
-      .catch((error) => {
-        return response.status(500).send({ error: error, message: error.message });
-      });
+    // Retorna as revisões encontradas
+    return res.status(200).json(reviews);
   } catch (error) {
     console.error(error);
-    response.status(500).send("Internal server error");
+    return res.status(500).send("Erro interno do servidor");
   }
 };
+
 
 // Function to edit an existing review
 exports.editReview = async (req, res) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
 import cpuModels from '../AssetsJS/Specs/cpuModels';
-import gpuModels from '../AssetsJS/Specs/gpuModel';
+import gpuModels from '../AssetsJS/Specs/gpuModel'; // Corrected from 'gpuModel' to 'gpuModels'
 import ramModels from '../AssetsJS/Specs/ramModel'; // Corrected from 'ramModel' to 'ramModels'
 import osTypes from '../AssetsJS/Specs/osType'; // Corrected from 'osType' to 'osTypes'
 
@@ -11,7 +11,7 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     cpuModel: "",
     gpuModel: "",
-    ram: "",  // Keeping it as string for now to handle input change event properly
+    ram: "", // Keeping it as string for now to handle input change event properly
     ostype: ""
   });
 
@@ -51,28 +51,32 @@ const Profile = () => {
   };
 
   const addSpecs = async () => {
+    const userEmail = localStorage.getItem('userEmail'); // Retrieve userEmail from local storage
+    console.log('userEmail:', userEmail); // Log userEmail to check
+  
     console.log(formData);
-
-    let responseData;
-
-    await fetch(`http://localhost:3001/user/addspecs/${userEmail}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    }).then(response => response.json())
-      .then(data => responseData = data);
-
-    if (responseData.success) {
-      localStorage.setItem('auth-token', responseData.token);
-      localStorage.setItem('userEmail', responseData.email);
-      window.location.replace("/");
-    } else {
-      alert(responseData.msg);
+  
+    try {
+      const response = await fetch(`http://localhost:3001/user/addspecs/${userEmail}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'useremail': userEmail // Include userEmail in headers (lowercase)
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
     }
   };
+  
+  
+  
 
   return (
     <div className="profile">
@@ -157,12 +161,25 @@ const Profile = () => {
           </div>
         )}
         {activeTab === 'library' && (
-          <div className="library-container active">
-            <h2>Title</h2>
-            <p>{/* Display title of the game key here */}</p>
-            <h2>Game Key</h2>
-            <p>{/* Display game key here */}</p>
+          <div className="gameykey-container active">
+          <div className="gamekey-header">
+            <span>Title</span>
+            <span>Date</span>
+            <span>Gamekey</span>
           </div>
+          <hr />
+          {Array.isArray(allProducts) && allProducts.length > 0 ? (
+            allProducts.map((product, index) => (
+              <div key={index} className="gamekey-row">
+                <p className="gamekey-title">{product.title}</p>
+                <p className="gamekey-date">{new Date(product.date).toLocaleDateString()}</p>
+                <p className="gamekey">{product.game_key}</p>
+              </div>
+            ))
+          ) : (
+            <p>No products found</p>
+          )}
+        </div>
         )}
       </div>
     </div>

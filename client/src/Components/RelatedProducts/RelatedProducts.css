@@ -7,7 +7,7 @@
 }
 
 .relatedproducts h1{
-    color: #171717;
+    color: white;
     font-size: 50px;
     font-weight: 600;
 }
@@ -16,7 +16,7 @@
     width: 200px;
     height: 6px;
     border-radius: 10px;
-    background: #252525;
+    background: white;
 }
 
 .relatedproducts-item {
@@ -28,6 +28,12 @@
 .relatedproducts-item img {
     height: 230px;
     width: 170px;
+}
+
+.relatedproducts-item p {
+    color: white;
+    font-weight: 500000;
+    font-family: 'Poppins';
 }
 
 @media(max-width:1280px){

@@ -1,6 +1,7 @@
 .productdisplay{
     display: flex;
     margin: 0px 170px;
+    padding-top: 30px;
 }
 
 .productdisplay-left{
@@ -15,8 +16,9 @@
 }
 
 .productdisplay-main-img{
-    width: 400px;
+    width: 350px;
     height: 500px;
+    border-radius: 10px;
 }
 
 .productdisplay-right{
@@ -46,6 +48,7 @@
     gap: 30px;
     font-size: 24px;
     font-weight: 700;
+    color: white;
 }
 
 .productdisplay-right button{
@@ -61,6 +64,10 @@
     gap: 40px;
     border-radius: 10px;
     margin-top: 50px;
+}
+
+.productdisplay-right-description p {
+    color: white;
 }
 
 @media(max-width:1280px){

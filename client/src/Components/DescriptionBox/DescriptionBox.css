@@ -1,5 +1,6 @@
 .descriptionbox{
     margin: 120px 170px;
+    background: white;
 }
 
 .descriptionbox-navigator{
@@ -15,6 +16,7 @@
     width: 171px;
     height: 70px;
     border: 1px solid #d0d0d0;
+    cursor: pointer;
 }
 
 .descriptionbox-nav-box.fade{
@@ -31,12 +33,39 @@
     padding-bottom: 70px;
 }
 
+.review {
+    border-top: 1px solid #d0d0d0;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 @media(max-width:1280px){
     .descriptionbox{
         margin: 60px;
     }
-
-
 }
 
 @media(max-width:800px){

@@ -15,7 +15,7 @@ router.post("/user/addtocart", auth.required, usersController.AddToCart);
 router.post("/user/remotefromcart", auth.required, usersController.RemoveFromCart);
 router.post("/user/getcart", auth.required, usersController.GetCart);
 router.post("/user/clearcart", auth.required, usersController.ClearCart);
-router.post("/user/addspecs", usersController.AddSpecs);
+router.post("/user/addspecs/:email", usersController.addSpecs);
 
 router.get("/", log.logMiddleware, (req, res) => {
   try {
