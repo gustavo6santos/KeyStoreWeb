@@ -5,19 +5,16 @@
     align-items: center;
     padding: 20px;
     background-color: #f9f9f9;
-    margin-top: 100;
     height: 200px;
   }
 
-.comparespecs h1{
-    margin-top: 5vh;
-}
+
   
 .toggle-text {
   cursor: pointer;
   color: #007bff;
   font-size: 1.2em;
-  margin-top: 10px;
+
   padding: 10px 20px;
   background-color: #e9f5ff;
   border-radius: 5px;
@@ -39,7 +36,6 @@
   justify-content: space-between;
   width: 80%;
   max-width: 800px;
-  margin-top: 20px;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -65,7 +61,6 @@
   align-items: center;
   padding: 20px;
   background-color: #f9f9f9;
-  margin-top: 100;
   height: 200px;
   position: relative; /* Add this */
 }

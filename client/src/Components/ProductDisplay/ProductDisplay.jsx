@@ -3,11 +3,12 @@ import './ProductDisplay.css';
 import star_icon from '../Assets/Web Icons/star_icon.png';
 import star_dull_icon from '../Assets/Web Icons/star_dull_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
-import DescriptionBox from '../DescriptionBox/DescriptionBox'; // Import DescriptionBox component
 
 const ProductDisplay = (props) => {
     const { game } = props;
     const { addToCart } = useContext(ShopContext);
+
+    localStorage.setItem('gameid', game.gameid);
 
     return (
         <div className='productdisplay'>
@@ -18,7 +19,7 @@ const ProductDisplay = (props) => {
                 </div>
             </div>
             <div className="productdisplay-right">
-                <h1>{game.name}</h1>
+                <h1>{game.title}</h1>
                 <div className="productdisplay-right-star">
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
@@ -29,7 +30,7 @@ const ProductDisplay = (props) => {
                 </div>
                 <div className="productdisplay-prices">{game.price} €</div>
                 <div className="productdisplay-right-description">
-                    <p>Step into the world of EA Sports FC 24, where the future of football gaming comes alive! With unrivaled realism, this immersive experience encapsulates all the beloved features of contemporary FIFA games.</p>
+                    <p>{game.description}</p>
                 </div>
                 <button onClick={() => { addToCart(game.gameid) }}>ADD TO CART</button>
             </div>

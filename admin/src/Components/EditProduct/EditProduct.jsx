@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './AddProduct.css';
+import '../AddProduct/AddProduct';
 import upload_area from '../../assets/upload_area.svg';
 import cpuModels from '../../../../client/src/Components/AssetsJS/Specs/cpuModels';
 import gpuModels from '../../../../client/src/Components/AssetsJS/Specs/gpuModel';
 import ostype from '../../../../client/src/Components/AssetsJS/Specs/osType';
 import ramModel from '../../../../client/src/Components/AssetsJS/Specs/ramModel';
 
-const AddProduct = () => {
+const EditProduct = () => {
     const [image, setImage] = useState(null);
     const [productDetails, setProductDetails] = useState({
         title: "",
@@ -61,7 +61,7 @@ const AddProduct = () => {
         }
     };
 
-    const Add_Product = async () => {
+    const Edit_Product = async () => {
         const product = {
             ...productDetails,
             price: parseFloat(productDetails.price),
@@ -69,8 +69,8 @@ const AddProduct = () => {
             ram: parseInt(productDetails.ram, 10),
         };
 
-        const response = await fetch('http://localhost:3002/create', {
-            method: 'POST',
+        const response = await fetch(`http://localhost:3002/edit/${productDetails.gameid}`, {
+            method: 'PUT',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -79,11 +79,15 @@ const AddProduct = () => {
         });
 
         const data = await response.json();
-        data.success ? alert("Product Added With Success") : alert("Failed to add product");
+        data.success ? alert("Product Updated With Success") : alert("Failed to add product");
     };
 
     return (
         <div className='add-product'>
+            <div className="addproduct-itemfield">
+                <p>Game ID</p>
+                <input value={productDetails.gameid} onChange={changeHandler} type="text" name='title' placeholder='Type Here' />
+            </div>
             <div className="addproduct-itemfield">
                 <p>Product Title</p>
                 <input value={productDetails.title} onChange={changeHandler} type="text" name='title' placeholder='Type Here' />
@@ -168,9 +172,9 @@ const AddProduct = () => {
                 <input onChange={imageHandler} type="file" id='file-input' hidden />
             </div>
 
-            <button onClick={Add_Product} className='addproduct-btn'>Add</button>
+            <button onClick={Edit_Product} className='addproduct-btn'>Update</button>
         </div>
     );
 }
 
-export default AddProduct;
+export default EditProduct;

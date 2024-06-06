@@ -6,6 +6,7 @@ const Game = mongoose.model("Game", {
   image: String,
   price: Number,
   genre: String,
+  description: String,
   category: String,
   stock: Number,
   ram: Number,

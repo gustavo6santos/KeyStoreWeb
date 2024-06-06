@@ -1,13 +1,13 @@
-.descriptionbox{
-    margin: 120px 170px;
+.descriptionbox {
+    margin: 100px 170px;
     background: white;
-}
-
-.descriptionbox-navigator{
+  }
+  
+  .descriptionbox-navigator {
     display: flex;
-}
-
-.descriptionbox-nav-box{
+  }
+  
+  .descriptionbox-nav-box {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,37 +17,55 @@
     height: 70px;
     border: 1px solid #d0d0d0;
     cursor: pointer;
-}
-
-.descriptionbox-nav-box.fade{
+  }
+  
+  .descriptionbox-nav-box.fade {
     background: #fbfbfb;
     color: #555;
-}
-
-.descriptionbox-description{
+  }
+  
+  .descriptionbox-description {
     display: flex;
     flex-direction: column;
     gap: 25px;
     border: 1px solid #d0d0d0;
     padding: 48px;
     padding-bottom: 70px;
-}
-
-.review {
+  }
+  
+  .review {
     border-top: 1px solid #d0d0d0;
     padding-top: 10px;
     margin-top: 10px;
-}
-
-textarea {
+  }
+  
+  .review-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star-icon {
+    width: 15px;
+    height: 15px;
+  }
+  
+  textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #d0d0d0;
     border-radius: 5px;
     margin-top: 10px;
-}
-
-button {
+  }
+  
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  button {
     margin-top: 10px;
     padding: 10px 20px;
     border: none;
@@ -56,34 +74,123 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #0056b3;
-}
-
-@media(max-width:1280px){
-    .descriptionbox{
-        margin: 60px;
+  }
+  
+  @media(max-width:1280px) {
+    .descriptionbox {
+      margin: 60px;
     }
-}
-
-@media(max-width:800px){
-    .descriptionbox{
-        margin: 60px 20px;
+  }
+  
+  @media(max-width:800px) {
+    .descriptionbox {
+      margin: 60px 20px;
     }
-
-    .descriptionbox-description{
-        font-size: 14px;
+  
+    .descriptionbox-description {
+      font-size: 14px;
     }
-}
-
-@media(max-width:500px){
-    .descriptionbox{
-        margin: 60px 20px;
+  }
+  
+  @media(max-width:500px) {
+    .descriptionbox {
+      margin: 60px 20px;
     }
-
-    .descriptionbox-description{
-        font-size: 14px;
+  
+    .descriptionbox-description {
+      font-size: 14px;
     }
-}
+  }
+  
+  .comparespecs {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .toggle-text {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: #e9f5ff;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .toggle-text:hover {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #0056b3;
+  }
+  
+  .comparespecs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .specs-column {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .specs-column h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .specs-input {
+    margin-bottom: 20px;
+  }
+  
+  .bold-text {
+    font-weight: bold;
+  }
+  
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .comparespecs-button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    margin-top: auto;
+    margin-bottom: 40px;
+    font-size: 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comparespecs-button:hover {
+    background-color: #0056b3;
+  }
+  

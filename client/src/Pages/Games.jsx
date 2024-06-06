@@ -19,7 +19,6 @@ export const Games = () => {
         <Breadcrum game={product} />
         <ProductDisplay game={product} />
         <DescriptionBox/> 
-        <CompareSpecs game={product} />
         <RelatedProducts />
     </div>
   )

@@ -9,7 +9,7 @@ const multer = require("multer");
 
 // Create a game
 exports.createGame = async (req, res) => {
-  const { gameid, title, image, price, genre, category ,stock, ram, cpuModel, gpuModel, ostype } = req.body;
+  const { gameid, title, image, price, genre, description, category ,stock, ram, cpuModel, gpuModel, ostype } = req.body;
 
   // Validations
   if (!title) {
@@ -25,6 +25,9 @@ exports.createGame = async (req, res) => {
   }
   if (!genre) {
     return res.status(422).json({ msg: "Genre is mandatory!" });
+  }
+  if (!description) {
+    return res.status(422).json({ msg: "Description is mandatory!" });
   }
   if (!category) {
     return res.status(422).json({ msg: "Genre is mandatory!" });
@@ -61,6 +64,7 @@ exports.createGame = async (req, res) => {
       image,
       price,
       genre,
+      description,
       category,
       stock,
       ram,
@@ -90,6 +94,7 @@ exports.createGame = async (req, res) => {
     title,
     image,
     price,
+    description,
     genre,
     category,
     stock
@@ -132,18 +137,23 @@ exports.getGames = async (req, res) => {
   }
 };
 
+
+
 exports.editgame = async (req, res) => {
   try {
-    const gameId = req.params.id;
-    const { title, image, price, genre, stock, ram, cpuModel, gpuModel, ostype } = req.body;
+    const gameid = new mongoose.Types.ObjectId(req.params.id);
+    console.log(gameid)
+
+    const { title, image, price, genre, description, category, stock, ram, cpuModel, gpuModel, ostype } = req.body;
 
     const updatedGame = await Game.findByIdAndUpdate(
-      gameId,
+      gameid,
       {
         title,
         image,
         price,
         genre,
+        description,
         category,
         stock,
         ram,
@@ -164,7 +174,6 @@ exports.editgame = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 exports.deleteGame = async (req, res) => {
   try {
     const gameId = req.params.id;
