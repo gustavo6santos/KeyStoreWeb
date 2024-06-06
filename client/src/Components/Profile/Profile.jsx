@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
-import cpuModels from '../AssetsJS/Specs/cpuModels';
-import gpuModels from '../AssetsJS/Specs/gpuModel'; // Corrected from 'gpuModel' to 'gpuModels'
-import ramModels from '../AssetsJS/Specs/ramModel'; // Corrected from 'ramModel' to 'ramModels'
-import osTypes from '../AssetsJS/Specs/osType'; // Corrected from 'osType' to 'osTypes'
+import specs from '../AssetsJS/Specs/specs';
+import ramModels from '../AssetsJS/Specs/ramModel'
+import osTypes from '../AssetsJS/Specs/osType';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('orders');
@@ -74,9 +73,21 @@ const Profile = () => {
       console.error('Error:', error.message);
     }
   };
-  
-  
-  
+
+  const generateOptions = (items) => {
+    const options = [];
+    for (const brand in items) {
+      for (const series in items[brand]) {
+        for (const model in items[brand][series]) {
+          options.push({ brand, series, model });
+        }
+      }
+    }
+    return options;
+  };
+
+  const cpuOptions = generateOptions(specs.cpus);
+  const gpuOptions = generateOptions(specs.gpus);
 
   return (
     <div className="profile">
@@ -128,16 +139,20 @@ const Profile = () => {
             <div className="specs-input">
               <label>Select your CPU Model</label>
               <select name="cpuModel" value={formData.cpuModel} onChange={handleChange}>
-                {cpuModels.map((cpuModel) => (
-                  <option key={cpuModel.id} value={cpuModel.model}>{cpuModel.model}</option>
+                {cpuOptions.map((cpuOption, index) => (
+                  <option key={index} value={cpuOption.model}>
+                    {cpuOption.brand} {cpuOption.series} - {cpuOption.model}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="specs-input">
               <label>Select your GPU Model</label>
               <select name="gpuModel" value={formData.gpuModel} onChange={handleChange}>
-                {gpuModels.map((gpuModel) => (
-                  <option key={gpuModel.id} value={gpuModel.model}>{gpuModel.model}</option>
+                {gpuOptions.map((gpuOption, index) => (
+                  <option key={index} value={gpuOption.model}>
+                    {gpuOption.brand} {gpuOption.series} - {gpuOption.model}
+                  </option>
                 ))}
               </select>
             </div>
@@ -161,25 +176,25 @@ const Profile = () => {
           </div>
         )}
         {activeTab === 'library' && (
-          <div className="gameykey-container active">
-          <div className="gamekey-header">
-            <span>Title</span>
-            <span>Date</span>
-            <span>Gamekey</span>
+          <div className="gamekey-container active">
+            <div className="gamekey-header">
+              <span>Title</span>
+              <span>Date</span>
+              <span>Gamekey</span>
+            </div>
+            <hr />
+            {Array.isArray(allProducts) && allProducts.length > 0 ? (
+              allProducts.map((product, index) => (
+                <div key={index} className="gamekey-row">
+                  <p className="gamekey-title">{product.title}</p>
+                  <p className="gamekey-date">{new Date(product.date).toLocaleDateString()}</p>
+                  <p className="gamekey">{product.game_key}</p>
+                </div>
+              ))
+            ) : (
+              <p>No products found</p>
+            )}
           </div>
-          <hr />
-          {Array.isArray(allProducts) && allProducts.length > 0 ? (
-            allProducts.map((product, index) => (
-              <div key={index} className="gamekey-row">
-                <p className="gamekey-title">{product.title}</p>
-                <p className="gamekey-date">{new Date(product.date).toLocaleDateString()}</p>
-                <p className="gamekey">{product.game_key}</p>
-              </div>
-            ))
-          ) : (
-            <p>No products found</p>
-          )}
-        </div>
         )}
       </div>
     </div>

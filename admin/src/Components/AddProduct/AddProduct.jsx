@@ -76,7 +76,7 @@ const AddProduct = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(product),
-        });
+        }); 
 
         const data = await response.json();
         data.success ? alert("Product Added With Success") : alert("Failed to add product");
