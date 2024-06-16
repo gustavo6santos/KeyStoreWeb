@@ -86,7 +86,7 @@ const Checkout = () => {
                             <h3>${getTotalCartAmount()}</h3>
                         </div>
                     </div>
-                    <Link to='/checkout/confirmation'>
+                    <Link to='/profile'>
                         <button onClick={handlePurchase}>PURCHASE</button>
                     </Link>
                 </div>

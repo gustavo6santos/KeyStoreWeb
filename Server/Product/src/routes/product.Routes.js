@@ -30,7 +30,7 @@ router.get("/games", productController.getGames);
 router.put("/games/edit/:id", productController.editgame);
 router.delete("/games/delete/:id", productController.deleteGame);
 router.get("/game/verify/:id", productController.verifyGameById);
-router.post("/game/GameCompatibility/:id", productController.GameCompatibility);
+router.post("/game/GameCompatibility", productController.GameCompatibility);
 //router.post("/game/AddToCart", productController.AddToCart);
 
 

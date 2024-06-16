@@ -1,20 +1,28 @@
-import React from 'react'
-import './RelatedProducts.css'
-import games from '../AssetsJS/games'
-import { Item } from '../Item/Item'
+// RelatedProducts.jsx
 
-const RelatedProducts = () => {
+import React from 'react';
+import './RelatedProducts.css';
+import { Item } from '../Item/Item';
+
+const RelatedProducts = ({ games }) => { // Destructure games prop
   return (
     <div className='relatedproducts'>
       <h1>Related Products</h1>
       <hr />
       <div className="relatedproducts-item">
-        {games.map((item,i)=>{
-            return <p> <Item key={i} _id={item._id} name={item.name} image={item.image} price={item.price} category={item.genre}/> </p> 
-        })}
+        {games.map((item, i) => (
+          <Item
+            key={i}
+            _id={item._id}
+            name={item.name}
+            image={item.image}
+            price={`${item.price} €`}
+            category={item.genre}
+          />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default RelatedProducts
+export default RelatedProducts;

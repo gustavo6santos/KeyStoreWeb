@@ -42,7 +42,8 @@
 }
 
 .item-prices p {
-    color: rgb(213, 244, 11);
+    color: rgb(245, 8, 8);
+    font-weight: 1000;
 }
 
 .category p {

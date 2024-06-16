@@ -19,7 +19,9 @@ function App() {
       <BrowserRouter>
       <Navbar/>
       <Routes>
-        <Route path='/' element={<Shop/>}/>
+        <Route path='/' element={<LoginSignup/>}/>
+        <Route path='/login' element={<LoginSignup/>}/>
+        <Route path='/shop' element={<Shop/>}/>
         <Route path='/pc' element={<GameCategory  category="Pc" />}/>
         <Route path='/ps' element={<GameCategory  category="Ps"/>}/>
         <Route path='/xbox' element={<GameCategory  category="Xbox"/>}/>
@@ -28,7 +30,6 @@ function App() {
           <Route path=':gameId' element={<Games/>}/>
         </Route>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/login' element={<LoginSignup/>}/>
         <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/profile' element={<UserProfile/>}/>
       </Routes>

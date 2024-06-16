@@ -4,28 +4,49 @@ import star_icon from '../Assets/Web Icons/star_icon.png';
 import star_dull from '../Assets/Web Icons/star_dull_icon.png';
 import CompareSpecs from '../CompareSpecs/CompareSpecs';
 
-
-const DescriptionBox = ({ game, userSpecs }) => {
-
+const DescriptionBox = ({ game }) => {
   const [activeTab, setActiveTab] = useState('description');
-
   const [reviews, setReviews] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
   const [newReview, setNewReview] = useState({
-
     gameid: localStorage.getItem('gameid'),
-
     userEmail: localStorage.getItem('userEmail'),
-
     comment: '',
-
     rating: '',
-
   });
 
   const [userData, setUserData] = useState(null);
+  const [compatibilityMessage, setCompatibilityMessage] = useState('');
+
+  const fetchCompatibility = async () => {
+    const userEmail = localStorage.getItem('userEmail');
+    const gameId = localStorage.getItem('gameid');
+    if (!userEmail || !gameId) {
+      alert('User email or game ID not found in local storage');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:3002/game/GameCompatibility', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userEmail,
+          gameid: gameId,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to test compatibility');
+      }
+      const data = await response.json();
+      // Update the compatibility message state with the received data
+      setCompatibilityMessage(data);
+    } catch (error) {
+      console.error('Error testing compatibility:', error);
+      alert('Error testing compatibility. Please try again later.');
+    }
+  };
 
   const fetchReviews = async () => {
     setLoading(true);
@@ -76,7 +97,7 @@ const DescriptionBox = ({ game, userSpecs }) => {
           gameid: localStorage.getItem('gameid'),
           userEmail: localStorage.getItem('userEmail'),
           comment: '',
-          rating: ''
+          rating: '',
         });
       } else {
         const errorData = await response.json();
@@ -121,131 +142,117 @@ const DescriptionBox = ({ game, userSpecs }) => {
     return stars;
   };
 
-  const testCompatibility = () => {
-    // Implement the functionality to test compatibility
-    alert('Compatibility tested!');
-  };
-
   return (
-
-    <div className='descriptionbox'>
-
+    <div className="descriptionbox">
       <div className="descriptionbox-navigator">
-
         <div
-
           className={`descriptionbox-nav-box ${activeTab === 'description' ? '' : 'fade'}`}
-
           onClick={() => handleTabChange('description')}
-
         >
-
           Test Game
-
         </div>
-
         <div
-
           className={`descriptionbox-nav-box ${activeTab === 'reviews' ? '' : 'fade'}`}
-
           onClick={() => handleTabChange('reviews')}
-
         >
-
           Reviews
-
         </div>
-
       </div>
 
-
-      {activeTab === 'description' && (
-
-        <div>
-
-          <h1>Recommended Specs</h1>
-
-          <div>
-
-            <label htmlFor="cpu">CPU:</label>
-
-            <div id="cpu">{game.cpuModel}</div>
-
-          </div>
-
-          <div>
-
-            <label htmlFor="gpu">GPU:</label>
-
-            <div id="gpu">{game.gpuModel}</div>
-
-          </div>
-
-          <div>
-
-            <label htmlFor="ram">RAM:</label>
-
-            <div id="ram">{game.ram} GB</div>
-
-          </div>
-
-          <div>
-
-            <label htmlFor="os">OS Type:</label>
-
-            <div id="os">{game.ostype}</div>
-
-          </div>
-
-
-          {/* Render user specs */}
-
-          <div>
-
-            <h2>User Specifications</h2>
-
-            <div>
-
-              <label htmlFor="cpu">CPU:</label>
-
-              <div id="cpu">{userSpecs.cpuModel}</div>
-
-            </div>
-
-            <div>
-
-              <label htmlFor="gpu">GPU:</label>
-
-              <div id="gpu">{userSpecs.gpuModel}</div>
-
-            </div>
-
-            <div>
-
-              <label htmlFor="ram">RAM:</label>
-
-              <div id="ram">{userSpecs.ram} GB</div>
-
-            </div>
-
-            <div>
-
-              <label htmlFor="os">OS Type:</label>
-
-              <div id="os">{userSpecs.ostype}</div>
-
-            </div>
-
-          </div>
-
-
-          <button onClick={testCompatibility}>Test Compatibility</button>
-
+      {game.category === 'Pc' && (
+  <>
+    {activeTab === 'description' && (
+      <div className="recommended-specs">
+        <h1>Recommended Specs</h1>
+        <div className="spec-item">
+          <span className="spec-label">CPU:</span>
+          <div className="spec-value">{game.cpuModel}</div>
         </div>
+        <div className="spec-item">
+          <span className="spec-label">GPU:</span>
+          <div className="spec-value">{game.gpuModel}</div>
+        </div>
+        <div className="spec-item">
+          <span className="spec-label">RAM:</span>
+          <div className="spec-value">{game.ram} GB</div>
+        </div>
+        <div className="spec-item">
+          <span className="spec-label">OS Type:</span>
+          <div className="spec-value">{game.ostype}</div>
+        </div>
+        <div className="test-compatibility">
+          <button onClick={fetchCompatibility}>Test Game Compatibility</button>
+          {compatibilityMessage && (
+            <div className="compatibility-results">
+              <h2>Compatibility Test Results</h2>
+              <p>
+                <span className="bold-text">CPU:</span> {compatibilityMessage.cpuSubtitle}
+              </p>
+              <p>
+                <span className="bold-text">GPU:</span> {compatibilityMessage.gpuSubtitle}
+              </p>
+              <p>
+                <span className="bold-text">RAM:</span> {compatibilityMessage.ramSubtitle}
+              </p>
+              <p>
+                <span className="bold-text">OS:</span> {compatibilityMessage.osMatch.osSubtitle}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
 
+          {activeTab === 'reviews' && (
+            <div className="descriptionbox-description">
+              {loading ? (
+                <p>Loading reviews...</p>
+              ) : (
+                <>
+                  {reviews && reviews.length > 0 ? (
+                    reviews.map((review, index) => (
+                      <div key={index} className="review">
+                        <div className="review-header">
+                          <p>{review.userEmail}</p>
+                          {renderStars(review.rating)}
+                        </div>
+                        <hr />
+                        <p>
+                          <strong>{review.comment}</strong>
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No reviews yet.</p>
+                  )}
+                  <form onSubmit={handleReviewSubmit}>
+                    <textarea
+                      name="comment"
+                      value={newReview.comment}
+                      onChange={handleInputChange}
+                      placeholder="Your comment"
+                      required
+                    ></textarea>
+                    <input
+                      type="number"
+                      name="rating"
+                      value={newReview.rating}
+                      onChange={handleInputChange}
+                      placeholder="Your rating"
+                      min="1"
+                      max="5"
+                      required
+                    />
+                    <button type="submit">Submit Review</button>
+                  </form>
+                </>
+              )}
+            </div>
+          )}
+        </>
       )}
 
-      {activeTab === 'reviews' && (
+      {game.category !== 'Pc' && activeTab === 'reviews' && (
         <div className="descriptionbox-description">
           {loading ? (
             <p>Loading reviews...</p>
@@ -259,7 +266,9 @@ const DescriptionBox = ({ game, userSpecs }) => {
                       {renderStars(review.rating)}
                     </div>
                     <hr />
-                    <p><strong>{review.comment}</strong></p>
+                    <p>
+                      <strong>{review.comment}</strong>
+                    </p>
                   </div>
                 ))
               ) : (

@@ -31,7 +31,7 @@ export const LoginSignup = () => {
     if (responseData.success) {
       localStorage.setItem('auth-token', responseData.token);
       localStorage.setItem('userEmail', responseData.email);
-      window.location.replace("/");
+      window.location.replace("/shop");
     } else {
       alert(responseData.msg);
     }
@@ -53,7 +53,7 @@ export const LoginSignup = () => {
 
     if (responseData.success) {
       console.log("Sign Up Successful");
-      window.location.replace("/login");  // Redirect to login after signup
+      window.location.replace("/");  // Redirect to login after signup
     } else {
       alert(responseData.msg);
     }

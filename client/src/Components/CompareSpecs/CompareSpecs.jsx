@@ -1,94 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import specs from '../AssetsJS/Specs/specs';
 import ramModel from '../AssetsJS/Specs/ramModel';
 import osType from '../AssetsJS/Specs/osType';
 import './CompareSpecs.css';
 
-const CompareSpecs = (props) => {
-
-  const { game } = props;
-
+const CompareSpecs = () => {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
   
-  const [selectedCPU, setSelectedCPU] = useState('');
-  const [selectedGPU, setSelectedGPU] = useState('');
-  const [selectedRAM, setSelectedRAM] = useState('');
-  const [selectedOS, setSelectedOS] = useState('');
-
-  const handleCPUChange = (event) => {
-    setSelectedCPU(event.target.value);
+  const fetchUserSpecs = async (setUserData, setLoading) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:3001/user/verify/${localStorage.getItem('userEmail')}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user specs');
+      }
+      const userData = await response.json();
+      setUserData(userData.data.user.specs);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user specs:', error);
+      setLoading(false);
+    }
   };
+  
 
-  const handleGPUChange = (event) => {
-    setSelectedGPU(event.target.value);
-  };
-
-  const handleRAMChange = (event) => {
-    setSelectedRAM(event.target.value);
-  };
-
-  const handleOSChange = (event) => {
-    setSelectedOS(event.target.value);
-  };
-
-  const renderCPUOptions = () => {
-    return Object.entries(specs.cpus).map(([brand, models]) => (
-      <optgroup label={brand} key={brand}>
-        {Object.entries(models).map(([series, cpus]) => (
-          <optgroup label={series} key={series}>
-            {Object.entries(cpus).map(([cpu, score]) => (
-              <option value={cpu} key={cpu}>{cpu}</option>
-            ))}
-          </optgroup>
-        ))}
-      </optgroup>
-    ));
-  };
-
-  const renderGPUOptions = () => {
-    return Object.entries(specs.gpus).map(([brand, series]) => (
-      <optgroup label={brand} key={brand}>
-        {Object.entries(series).map(([seriesName, gpus]) => (
-          <optgroup label={seriesName} key={seriesName}>
-            {Object.entries(gpus).map(([gpu, score]) => (
-              <option value={gpu} key={gpu}>{gpu}</option>
-            ))}
-          </optgroup>
-        ))}
-      </optgroup>
-    ));
-  };
-
-  const renderRAMOptions = () => {
-    return ramModel.map((ram) => (
-      <option value={ram.model} key={ram.id}>{ram.model} GB</option>
-    ));
-  };
-
-  const renderOSOptions = () => {
-    return osType.map((os) => (
-      <option value={os.model} key={os.id}>{os.model}</option>
-    ));
-  };
+  useEffect(() => {
+    fetchUserSpecs(setUserData, setLoading); // Call fetchUserSpecs function on component mount
+  }, []);
 
   return (
     <div>
-      <h1>Compare Specifications</h1>
-      <div>
-        <label htmlFor="cpu">CPU:</label>
-        <div id="cpu">{game.cpuModel}</div>
-      </div>
-      <div>
-        <label htmlFor="gpu">GPU:</label>
-        <div id="gpu">{game.gpuModel}</div>
-      </div>
-      <div>
-        <label htmlFor="ram">RAM:</label>
-        <div id="ram">{game.ram} GB</div>
-      </div>
-      <div>
-        <label htmlFor="os">OS Type:</label>
-        <div id="os">{game.ostype}</div>
-      </div>
+      <h1>My specs</h1>
+      {loading ? (
+        <p>Loading user specs...</p>
+      ) : (
+        <div>
+          <div>
+            <label htmlFor="cpu">CPU:</label>
+            <div id="cpu">{userData && userData.specs.cpuModel}</div>
+          </div>
+          <div>
+            <label htmlFor="gpu">GPU:</label>
+            <div id="gpu">{userData && userData.gpuModel}</div>
+          </div>
+          <div>
+            <label htmlFor="ram">RAM:</label>
+            <div id="ram">{userData && userData.ram} GB</div>
+          </div>
+          <div>
+            <label htmlFor="os">OS Type:</label>
+            <div id="os">{userData && userData.ostype}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
