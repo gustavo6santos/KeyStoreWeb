@@ -1,5 +1,3 @@
-// RelatedProducts.jsx
-
 import React from 'react';
 import './RelatedProducts.css';
 import { Item } from '../Item/Item';
@@ -10,7 +8,7 @@ const RelatedProducts = ({ games }) => { // Destructure games prop
       <h1>Related Products</h1>
       <hr />
       <div className="relatedproducts-item">
-        {games.map((item, i) => (
+        {games.slice(0, 6).map((item, i) => (
           <Item
             key={i}
             _id={item._id}

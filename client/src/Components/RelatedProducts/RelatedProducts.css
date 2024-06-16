@@ -29,6 +29,7 @@
 .relatedproducts-item img {
     height: 230px;
     width: 170px;
+    border-radius: 6px;
 }
 
 .relatedproducts-item p {
