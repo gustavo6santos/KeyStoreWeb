@@ -16,7 +16,7 @@ spec:
       - name: Review
         image: keystorepcc_review-service
         ports:
-        - containerPort: 3000
+        - containerPort: 3005
         resources:
           limits:
             cpu: 500m

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
-import cpuModels from '../../../../client/src/Components/AssetsJS/Specs/cpuModels';
-import gpuModels from '../../../../client/src/Components/AssetsJS/Specs/gpuModel';
-import ostype from '../../../../client/src/Components/AssetsJS/Specs/osType';
-import ramModel from '../../../../client/src/Components/AssetsJS/Specs/ramModel';
+import osTypes from '../../../../client/src/Components/AssetsJS/Specs/osType';
+import ramModels from '../../../../client/src/Components/AssetsJS/Specs/ramModel';
+import specs from '../../assetsJS/Specs/specs';
 
 const AddProduct = () => {
     const [image, setImage] = useState(null);
@@ -61,7 +60,17 @@ const AddProduct = () => {
         }
     };
 
+    const handleSpecChange = (e) => {
+        const { name, value } = e.target;
+        setProductDetails({ ...productDetails, [name]: value });
+    };
+
     const Add_Product = async () => {
+        if (!validateProductDetails()) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
         const product = {
             ...productDetails,
             price: parseFloat(productDetails.price),
@@ -69,18 +78,61 @@ const AddProduct = () => {
             ram: parseInt(productDetails.ram, 10),
         };
 
-        const response = await fetch('http://localhost:3002/create', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(product),
-        }); 
+        try {
+            const response = await fetch('http://localhost:3002/create', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(product),
+            });
 
-        const data = await response.json();
-        data.success ? alert("Product Added With Success") : alert("Failed to add product");
+            const data = await response.json();
+            if (data.success) {
+                alert("Product Added With Success");
+            } else {
+                console.error("API Response Error:", data);
+                alert("Failed to add product");
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            alert("An error occurred while adding the product");
+        }
     };
+
+    const validateProductDetails = () => {
+        const requiredFields = ['title', 'price', 'genre', 'description', 'category', 'stock'];
+        for (const field of requiredFields) {
+            if (!productDetails[field]) {
+                return false;
+            }
+        }
+        if (productDetails.category === 'Pc') {
+            const pcFields = ['ram', 'cpuModel', 'gpuModel', 'ostype'];
+            for (const field of pcFields) {
+                if (!productDetails[field]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    const generateOptions = (items) => {
+        const options = [];
+        for (const brand in items) {
+            for (const series in items[brand]) {
+                for (const model in items[brand][series]) {
+                    options.push({ brand, series, model });
+                }
+            }
+        }
+        return options;
+    };
+
+    const cpuOptions = generateOptions(specs.cpus);
+    const gpuOptions = generateOptions(specs.gpus);
 
     return (
         <div className='add-product'>
@@ -122,43 +174,44 @@ const AddProduct = () => {
             </div>
 
             {productDetails.category === "Pc" && (
-                <>
+                <div className="specs-column">
                     <div className="specs-input">
                         <label>Select your CPU Model</label>
-                        <select value={productDetails.cpuModel} onChange={changeHandler} name='cpuModel' className='add-specs'>
-                            {cpuModels.map((cpuModel) => (
-                                <option key={cpuModel.id} value={cpuModel.model}>{cpuModel.model}</option>
+                        <select name="cpuModel" value={productDetails.cpuModel} onChange={handleSpecChange}>
+                            {cpuOptions.map((cpuOption, index) => (
+                                <option key={index} value={cpuOption.model}>
+                                    {cpuOption.brand} {cpuOption.series} - {cpuOption.model}
+                                </option>
                             ))}
                         </select>
                     </div>
-
                     <div className="specs-input">
                         <label>Select your GPU Model</label>
-                        <select value={productDetails.gpuModel} onChange={changeHandler} name='gpuModel' className='add-specs'>
-                            {gpuModels.map((gpuModel) => (
-                                <option key={gpuModel.id} value={gpuModel.model}>{gpuModel.model}</option>
+                        <select name="gpuModel" value={productDetails.gpuModel} onChange={handleSpecChange}>
+                            {gpuOptions.map((gpuOption, index) => (
+                                <option key={index} value={gpuOption.model}>
+                                    {gpuOption.brand} {gpuOption.series} - {gpuOption.model}
+                                </option>
                             ))}
                         </select>
                     </div>
-
                     <div className="specs-input">
                         <label>Select your RAM Model</label>
-                        <select value={productDetails.ram} onChange={changeHandler} name='ram' className='add-specs'>
-                            {ramModel.map((ram) => (
-                                <option key={ram.id} value={ram.model}>{ram.model}</option>
+                        <select name="ram" value={productDetails.ram} onChange={handleSpecChange}>
+                            {ramModels.map((ram) => (
+                                <option key={ram.id} value={ram.model}>{ram.model} GB</option>
                             ))}
                         </select>
                     </div>
-
                     <div className="specs-input">
                         <label>Select your OS</label>
-                        <select value={productDetails.ostype} onChange={changeHandler} name='ostype' className='add-specs'>
-                            {ostype.map((ostype) => (
-                                <option key={ostype.id} value={ostype.model}>{ostype.model}</option>
+                        <select name="ostype" value={productDetails.ostype} onChange={handleSpecChange}>
+                            {osTypes.map((os) => (
+                                <option key={os.id} value={os.model}>{os.model}</option>
                             ))}
                         </select>
                     </div>
-                </>
+                </div>
             )}
 
             <div className="addproduct-itemfield">

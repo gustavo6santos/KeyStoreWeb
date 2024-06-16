@@ -16,8 +16,8 @@ spec:
 
     - name: http
 
-      port: 3000
+      port: 3005
 
-      targetPort: 3000
+      targetPort: 3005
 
   type: ClusterIP

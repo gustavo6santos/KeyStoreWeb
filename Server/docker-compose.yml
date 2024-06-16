@@ -14,7 +14,7 @@ services:
     build:
       context: ./Review
     ports:
-      - "3000:3000"
+      - "3005:3005"
   shop-service:
     build:
       context: ./Shop

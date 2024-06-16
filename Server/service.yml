@@ -33,8 +33,8 @@ spec:
     app: review-service
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 3005
+      targetPort: 3005
   type: LoadBalancer
 ---
 apiVersion: v1
