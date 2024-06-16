@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import './DescriptionBox.css';
+import './DescriptionBox.css'; // Import the CSS file
 import star_icon from '../Assets/Web Icons/star_icon.png';
 import star_dull from '../Assets/Web Icons/star_dull_icon.png';
 import CompareSpecs from '../CompareSpecs/CompareSpecs';
 
-const DescriptionBox = (props) => {
+
+const DescriptionBox = ({ game, userSpecs }) => {
+
   const [activeTab, setActiveTab] = useState('description');
+
   const [reviews, setReviews] = useState([]);
+
   const [loading, setLoading] = useState(false);
+
   const [newReview, setNewReview] = useState({
-    gameid: localStorage.getItem('gameid'), 
-    userEmail: localStorage.getItem('userEmail'), 
-    comment: '', 
-    rating: ''
+
+    gameid: localStorage.getItem('gameid'),
+
+    userEmail: localStorage.getItem('userEmail'),
+
+    comment: '',
+
+    rating: '',
+
   });
+
+  const [userData, setUserData] = useState(null);
 
   const fetchReviews = async () => {
     setLoading(true);
@@ -27,6 +39,22 @@ const DescriptionBox = (props) => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching reviews:', error);
+      setLoading(false);
+    }
+  };
+
+  const fetchUserSpecs = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:3001/user/verify/${localStorage.getItem('userEmail')}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user specs');
+      }
+      const userData = await response.json();
+      setUserData(userData.specs); // Extracting user specs from userData
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user specs:', error);
       setLoading(false);
     }
   };
@@ -46,8 +74,8 @@ const DescriptionBox = (props) => {
         setReviews((prevReviews) => [...prevReviews, reviewData]);
         setNewReview({
           gameid: localStorage.getItem('gameid'),
-          userEmail: localStorage.getItem('userEmail'), 
-          comment: '', 
+          userEmail: localStorage.getItem('userEmail'),
+          comment: '',
           rating: ''
         });
       } else {
@@ -64,8 +92,10 @@ const DescriptionBox = (props) => {
   useEffect(() => {
     if (activeTab === 'reviews') {
       fetchReviews();
+    } else if (activeTab === 'description') {
+      fetchUserSpecs();
     }
-  }, [activeTab, localStorage.getItem('gameid')]);
+  }, [activeTab]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -91,33 +121,128 @@ const DescriptionBox = (props) => {
     return stars;
   };
 
-  const game = {
-    name: "Game Name", // You should replace this with actual game data
-    cpuModel: "Intel i5",
-    gpuModel: "NVIDIA GTX 1050",
-    ram: "8 GB",
-    ostype: "Windows 10",
+  const testCompatibility = () => {
+    // Implement the functionality to test compatibility
+    alert('Compatibility tested!');
   };
 
   return (
+
     <div className='descriptionbox'>
+
       <div className="descriptionbox-navigator">
+
         <div
+
           className={`descriptionbox-nav-box ${activeTab === 'description' ? '' : 'fade'}`}
+
           onClick={() => handleTabChange('description')}
+
         >
+
           Test Game
+
         </div>
+
         <div
+
           className={`descriptionbox-nav-box ${activeTab === 'reviews' ? '' : 'fade'}`}
+
           onClick={() => handleTabChange('reviews')}
+
         >
+
           Reviews
+
         </div>
+
       </div>
 
+
       {activeTab === 'description' && (
-        <CompareSpecs game={game} />
+
+        <div>
+
+          <h1>Recommended Specs</h1>
+
+          <div>
+
+            <label htmlFor="cpu">CPU:</label>
+
+            <div id="cpu">{game.cpuModel}</div>
+
+          </div>
+
+          <div>
+
+            <label htmlFor="gpu">GPU:</label>
+
+            <div id="gpu">{game.gpuModel}</div>
+
+          </div>
+
+          <div>
+
+            <label htmlFor="ram">RAM:</label>
+
+            <div id="ram">{game.ram} GB</div>
+
+          </div>
+
+          <div>
+
+            <label htmlFor="os">OS Type:</label>
+
+            <div id="os">{game.ostype}</div>
+
+          </div>
+
+
+          {/* Render user specs */}
+
+          <div>
+
+            <h2>User Specifications</h2>
+
+            <div>
+
+              <label htmlFor="cpu">CPU:</label>
+
+              <div id="cpu">{userSpecs.cpuModel}</div>
+
+            </div>
+
+            <div>
+
+              <label htmlFor="gpu">GPU:</label>
+
+              <div id="gpu">{userSpecs.gpuModel}</div>
+
+            </div>
+
+            <div>
+
+              <label htmlFor="ram">RAM:</label>
+
+              <div id="ram">{userSpecs.ram} GB</div>
+
+            </div>
+
+            <div>
+
+              <label htmlFor="os">OS Type:</label>
+
+              <div id="os">{userSpecs.ostype}</div>
+
+            </div>
+
+          </div>
+
+
+          <button onClick={testCompatibility}>Test Compatibility</button>
+
+        </div>
+
       )}
 
       {activeTab === 'reviews' && (
@@ -166,6 +291,6 @@ const DescriptionBox = (props) => {
       )}
     </div>
   );
-}
+};
 
 export default DescriptionBox;

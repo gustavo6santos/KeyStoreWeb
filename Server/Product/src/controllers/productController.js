@@ -1,6 +1,8 @@
 // Imports
 require("dotenv").config();
 const mongoose = require("mongoose");
+const axios = require("axios");
+
 
 // Models
 const Game = require("../models/productModel");
@@ -112,8 +114,8 @@ exports.createGame = async (req, res) => {
 
 exports.getGame = async (req, res) => {
   try {
-    const gameId = req.params.id;
-    const game = await Game.findById(gameId);
+    const gameid = req.params.id;
+    const game = await Game.findOne({ gameid: gameid });
     if (!game) {
       return res.status(404).json({ message: "Game not found" });
     }
@@ -208,26 +210,10 @@ exports.verifyGameById = async (req, res) => {
 
 exports.GameCompatibility = async (req, res) => {
 
-  const { ram } = req.body;
-
-  try {
-    let id = req.params.id;
-    const game = await Game.findById(id);
-
-    if (ram >= game.ram) {
-      
-      res.status(200).json({ message: "Recomended specs for a good gameplay." });
-    } else {
-      
-      res.status(200).json({ message: "Not recomended specs for this game." });
-    }
-
-  } catch (error) {
-    res.status(500).json({ message: "Error comparing game compatibility." });
-  }
+  
+    
 
 };
-
 
 // exports.AddToCart = async (req,res) => {
 //   console.log(req.body);

@@ -12,12 +12,12 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Configure multer storage
-const storage = multer.diskStorage({ 
-    destination: (req, file, cb) => { 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
         cb(null, uploadDir); 
     },
-    filename: (req, file, cb) => { 
-        cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+    filename: (req, file, cb) => {
+        cb(null, `${file.fieldname}${Date.now()}${path.extname(file.originalname)}`);
     } 
 });
 
@@ -30,7 +30,7 @@ router.get("/games", productController.getGames);
 router.put("/games/edit/:id", productController.editgame);
 router.delete("/games/delete/:id", productController.deleteGame);
 router.get("/game/verify/:id", productController.verifyGameById);
-router.post("/game/GameCompatibility:id", productController.GameCompatibility);
+router.post("/game/GameCompatibility/:id", productController.GameCompatibility);
 //router.post("/game/AddToCart", productController.AddToCart);
 
 
@@ -38,7 +38,7 @@ router.post("/game/GameCompatibility:id", productController.GameCompatibility);
 router.use('/images', express.static(uploadDir));
 
 // Image upload endpoint
-router.post("/upload", upload.single('product'), (req, res) => { 
+router.post("/upload", upload.single('product'), (req, res) => {
     res.json({ success: 1, image_url: `http://localhost:3002/images/${req.file.filename}` });
 });
 

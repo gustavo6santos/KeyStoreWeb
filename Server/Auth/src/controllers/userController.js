@@ -156,7 +156,7 @@ exports.verifyUserByEmail = async (req, res) => {
     }
 
     // Send response
-    return res.status(200).send({ success: 1 });
+    return res.status(200).send({ success: 1 , user: user});
   } catch (err) {
     return res.status(500).send({ error: err, message: err.message });
   }
@@ -276,4 +276,3 @@ exports.addSpecs = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" }); // Send JSON error response
   }
 };
-
