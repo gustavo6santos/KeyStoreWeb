@@ -8,7 +8,7 @@ export const Popular = ({ games, game }) => { // Destructure games prop
       <h1>Popular Games</h1>
       <hr />
       <div className="popular-item">
-        {games.slice(0, 6).map((item, i) => (
+        {games.slice(0, 4).map((item, i) => (
           <Item
             key={i}
             _id={item._id}

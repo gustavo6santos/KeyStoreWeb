@@ -9,6 +9,7 @@ const ProductDisplay = (props) => {
     const { addToCart } = useContext(ShopContext);
 
     localStorage.setItem('gameid', game.gameid);
+    localStorage.setItem('genre', game.genre);
 
     return (
         <div className='productdisplay'>
