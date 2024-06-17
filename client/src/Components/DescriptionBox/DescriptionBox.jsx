@@ -3,6 +3,7 @@ import './DescriptionBox.css'; // Import the CSS file
 import star_icon from '../Assets/Web Icons/star_icon.png';
 import star_dull from '../Assets/Web Icons/star_dull_icon.png';
 import CompareSpecs from '../CompareSpecs/CompareSpecs';
+import { Link } from 'react-router-dom';
 
 const DescriptionBox = ({ game }) => {
   const [activeTab, setActiveTab] = useState('description');
@@ -182,6 +183,8 @@ const DescriptionBox = ({ game }) => {
         </div>
         <div className="test-compatibility">
           <button onClick={fetchCompatibility}>Test Game Compatibility</button>
+         <p>Need to select your specs on profile to do the "Test Game Compatibility"! </p>
+         <Link to='/profile'><p>Click here to select specs!</p></Link> 
           {compatibilityMessage && (
             <div className="compatibility-results">
               <h2>Compatibility Test Results</h2>

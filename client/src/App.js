@@ -10,30 +10,33 @@ import { LoginSignup } from './Pages/LoginSignup';
 import Checkout from './Pages/Checkout';
 import { UserProfile } from './Pages/UserProfile';
 
-
-
-
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <Navbar/>
-      <Routes>
-        <Route path='/' element={<LoginSignup/>}/>
-        <Route path='/login' element={<LoginSignup/>}/>
-        <Route path='/shop' element={<Shop/>}/>
-        <Route path='/pc' element={<GameCategory  category="Pc" />}/>
-        <Route path='/ps' element={<GameCategory  category="Ps"/>}/>
-        <Route path='/xbox' element={<GameCategory  category="Xbox"/>}/>
-        <Route path='/nintendo' element={<GameCategory  category="Nintendo"/>}/>
-        <Route path='/game' element={<Games/>}>
-          <Route path=':gameId' element={<Games/>}/>
-        </Route>
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/checkout' element={<Checkout/>}/>
-        <Route path='/profile' element={<UserProfile/>}/>
-      </Routes>
-      <Footer/>
+        <Routes>
+          <Route path='/' element={<LoginSignup/>}/>
+          <Route path='/login' element={<LoginSignup/>}/>
+          <Route path='/*' element={
+            <>
+              <Navbar/>
+              <Routes>
+                <Route path='shop' element={<Shop/>}/>
+                <Route path='pc' element={<GameCategory  category="Pc" />}/>
+                <Route path='ps' element={<GameCategory  category="Ps"/>}/>
+                <Route path='xbox' element={<GameCategory  category="Xbox"/>}/>
+                <Route path='nintendo' element={<GameCategory  category="Nintendo"/>}/>
+                <Route path='game' element={<Games/>}>
+                  <Route path=':gameId' element={<Games/>}/>
+                </Route>
+                <Route path='cart' element={<Cart/>}/>
+                <Route path='checkout' element={<Checkout/>}/>
+                <Route path='profile' element={<UserProfile/>}/>
+              </Routes>
+              <Footer/>
+            </>
+          }/>
+        </Routes>
       </BrowserRouter>
     </div>
   );

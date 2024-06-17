@@ -20,6 +20,7 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right">
                 <h1>{game.title}</h1>
+                <p>{game.genre}</p>
                 <div className="productdisplay-right-star">
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
