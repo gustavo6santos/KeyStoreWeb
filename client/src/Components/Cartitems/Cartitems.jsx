@@ -24,9 +24,9 @@ const Cartitems = () => {
                             <div className="cartitems-format cartitems-format-main">
                                 <img src={e.image} alt="" className='carticon-product-icon' />
                                 <p>{e.title}</p>
-                                <p>${e.price}</p>
+                                <p>{e.price}€</p>
                                 <button className='cartitems-quantity'>{cartItems[e.gameid]}</button>
-                                <p>${e.price*cartItems[e.gameid]}</p>
+                                <p>€{e.price*cartItems[e.gameid]}</p>
                                 <img className='cartitems-remove-icon' src={remove_icon} onClick={()=>{removeFromCart(e.gameid)}} alt="" />
                             </div>
                             <hr />
@@ -40,12 +40,12 @@ const Cartitems = () => {
             <div>
                 <div className="cartitems-total-item">
                     <p>Subtotal</p>
-                    <p>${getTotalCartAmount()}</p>
+                    <p>{getTotalCartAmount()}€</p>
                 </div>
                 <hr />
                 <div className="cartitems-total-item">
                     <h3>Total</h3>
-                    <h3>${getTotalCartAmount()}</h3>
+                    <h3>{getTotalCartAmount()}€</h3>
                 </div>
             </div>
             <Link to='/checkout'><button>PROCEED TO CHECKOUT</button></Link>
